@@ -1,279 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astrology & Tarot Suite | Premium</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <style>
-    body {
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: 'Inter', sans-serif;
-    }
-    header {
-      background: linear-gradient(90deg, #4f46e5, #9333ea);
-      padding: 20px;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #fff;
-      border-bottom: 2px solid #6366f1;
-    }
-    section {
-      padding: 3rem 1rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .card {
-      background: #1e293b;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      margin-bottom: 2rem;
-    }
-    input, select, button {
-      background: #0f172a;
-      color: #f8fafc;
-      border: 1px solid #334155;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-    button {
-      background: #4f46e5;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #6366f1;
-    }
-    .tarot-card {
-      display: inline-block;
-      text-align: center;
-      margin: 10px;
-    }
-    .tarot-card img {
-      width: 100px;
-      border-radius: 0.5rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mystic Life Predictor</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+  }
+  .glass-card {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-8px);
+  }
+  .btn {
+    background: linear-gradient(90deg, #7f5af0, #2cb67d);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  .btn:hover {
+    opacity: 0.9;
+  }
+  .tarot-card {
+    width: 100px;
+    height: 160px;
+    background: linear-gradient(135deg, #272742, #1f1f34);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    cursor: pointer;
+  }
+  .tarot-card.flip {
+    transform: rotateY(180deg);
+  }
+  .tarot-card .front, .tarot-card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .tarot-card .back {
+    background: #7f5af0;
+    transform: rotateY(180deg);
+  }
+  .section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+</style>
 </head>
-<body>
-  <header>
-    Astrology & Tarot Suite <br>
-    <span class="text-sm">Part of Poornika Main Website</span>
-  </header>
+<body class="p-4">
+<header class="text-center mb-10">
+  <h1 class="text-4xl font-extrabold mb-2">🔮 Mystic Life Predictor</h1>
+  <p class="text-lg text-gray-300">Astrology • Numerology • Tarot • AI Insights</p>
+</header>
 
-  <!-- Astrology Section -->
-  <section>
-    <h2 class="text-2xl font-bold mb-4 text-indigo-400">Astrology Calculator</h2>
-    <div class="card">
-      <input type="text" id="name" placeholder="Enter your Name">
-      <input type="date" id="birthdate">
-      <input type="time" id="birthtime">
-      <input type="text" id="birthplace" placeholder="Enter Birthplace">
-      <button onclick="calculateAstrology()">Calculate Astrology</button>
-      <div id="astrology-result" class="mt-4 text-gray-300"></div>
+<!-- Input Section -->
+<section class="glass-card mb-8">
+  <div class="section-title">Enter Your Details</div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <input id="name" type="text" placeholder="Your Name" class="p-3 rounded bg-gray-800 text-white w-full">
+    <input id="dob" type="date" class="p-3 rounded bg-gray-800 text-white w-full">
+    <input id="time" type="time" class="p-3 rounded bg-gray-800 text-white w-full">
+    <input id="place" type="text" placeholder="Your Birth Place" class="p-3 rounded bg-gray-800 text-white w-full">
+  </div>
+  <div class="flex justify-center mt-4 gap-4">
+    <button onclick="detectLocation()" class="btn">Auto Detect Location</button>
+    <button onclick="generateAll()" class="btn">Generate Report</button>
+  </div>
+  <div class="flex justify-center mt-4 gap-4">
+    <label class="text-gray-300"><input type="radio" name="mode" value="offline" checked> Offline Mode</label>
+    <label class="text-gray-300"><input type="radio" name="mode" value="free"> Free API Mode</label>
+  </div>
+</section>
+
+<!-- Results -->
+<section id="results" class="space-y-8">
+  <!-- Astrology -->
+  <div class="glass-card">
+    <div class="section-title">Astrology Insights</div>
+    <p id="astro-result" class="text-gray-200"></p>
+  </div>
+
+  <!-- Numerology -->
+  <div class="glass-card">
+    <div class="section-title">Numerology Insights</div>
+    <p id="num-result" class="text-gray-200"></p>
+  </div>
+
+  <!-- Tarot -->
+  <div class="glass-card">
+    <div class="section-title">Tarot Reading</div>
+    <div class="flex flex-wrap gap-4 justify-center" id="tarot-cards"></div>
+    <div class="flex justify-center mt-4 gap-4">
+      <button onclick="drawTarot(1)" class="btn">1-Card Draw</button>
+      <button onclick="drawTarot(3)" class="btn">3-Card Spread</button>
+      <button onclick="drawTarot(10)" class="btn">Celtic Cross (10)</button>
     </div>
-  </section>
+    <p id="tarot-result" class="text-gray-300 mt-4"></p>
+  </div>
 
-  <!-- Numerology Section -->
-  <section>
-    <h2 class="text-2xl font-bold mb-4 text-indigo-400">Numerology Calculator</h2>
-    <div class="card">
-      <input type="text" id="num-name" placeholder="Enter your Name">
-      <input type="date" id="num-birthdate">
-      <button onclick="calculateNumerology()">Calculate Numerology</button>
-      <div id="numerology-result" class="mt-4 text-gray-300"></div>
-    </div>
-  </section>
+  <!-- AI Life Prediction -->
+  <div class="glass-card">
+    <div class="section-title">AI Life Prediction</div>
+    <p id="ai-result" class="text-gray-200">Click "Generate Report" to see AI predictions.</p>
+  </div>
+</section>
 
-  <!-- Tarot Reading -->
-  <section>
-    <h2 class="text-2xl font-bold mb-4 text-indigo-400">Tarot Reading</h2>
-    <div class="card">
-      <input type="text" id="tarot-question" placeholder="Enter your question">
-      <p class="mb-2">Choose Mode:</p>
-      <label><input type="radio" name="tarot-mode" value="offline" checked> Offline</label>
-      <label><input type="radio" name="tarot-mode" value="freeAI"> Free AI</label>
-      <label><input type="radio" name="tarot-mode" value="openai"> OpenAI</label>
-      <p class="mb-2 mt-4">Select Spread:</p>
-      <select id="tarot-spread">
-        <option value="basic">Basic (3 Cards)</option>
-        <option value="celtic-cross">Celtic Cross (10 Cards)</option>
-        <option value="relationship">Relationship (6 Cards)</option>
-        <option value="career">Career (5 Cards)</option>
-      </select>
-      <button onclick="drawTarot()">Draw Tarot Cards</button>
-      <div id="tarot-result" class="mt-4 text-gray-300"></div>
-      <div id="tarot-cards" class="mt-4"></div>
-    </div>
-  </section>
+<!-- Download -->
+<div class="flex justify-center mt-10">
+  <button onclick="downloadReport()" class="btn">Download PDF Report</button>
+</div>
 
-  <!-- GSAP Animations -->
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.from("header", { y: -100, duration: 1, ease: "power4.out" });
-    gsap.from("section h2", {
-      scrollTrigger: { trigger: "section h2", start: "top 90%" },
-      y: 50, opacity: 0, duration: 1, stagger: 0.3
+<script>
+// ===== AUTO LOCATION DETECTION =====
+async function detectLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = position.coords.latitude.toFixed(2);
+      const lon = position.coords.longitude.toFixed(2);
+      document.getElementById('place').value = `Lat: ${lat}, Lon: ${lon}`;
+    }, () => {
+      alert("Location access denied.");
     });
-    gsap.from("section div", {
-      scrollTrigger: { trigger: "section div", start: "top 85%" },
-      opacity: 0, y: 30, duration: 1, stagger: 0.2
-    });
-  </script>
+  }
+}
 
-  <!-- Main JS Logic -->
-  <script>
-    /* ---------------------------
-       1. ASTROLOGY CALCULATOR
-    ---------------------------- */
-    async function calculateAstrology() {
-      const name = document.getElementById('name').value;
-      const birthdate = document.getElementById('birthdate').value;
-      const birthtime = document.getElementById('birthtime').value;
-      const birthplace = document.getElementById('birthplace').value;
-
-      const resultDiv = document.getElementById('astrology-result');
-      resultDiv.innerHTML = "<p class='text-gray-400'>Calculating...</p>";
-
-      try {
-        // Auto location coordinates
-        let coords = { lat: null, lon: null };
-        if (birthplace) {
-          const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(birthplace)}`);
-          const geoData = await geoRes.json();
-          if (geoData && geoData.length > 0) {
-            coords.lat = geoData[0].lat;
-            coords.lon = geoData[0].lon;
-          }
-        }
-
-        const signIndex = new Date(birthdate).getMonth(); 
-        const signs = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-        const sign = signs[signIndex % 12];
-
-        resultDiv.innerHTML = `
-          <h3 class="text-xl font-bold mb-2 text-indigo-400">Astrology Report</h3>
-          <p>Name: ${name}</p>
-          <p>Date of Birth: ${birthdate}</p>
-          <p>Time: ${birthtime}</p>
-          <p>Place: ${birthplace}</p>
-          <p>Sun Sign: ${sign}</p>
-          <p><em>Coordinates:</em> ${coords.lat ? coords.lat + ", " + coords.lon : "Not found"}</p>
-        `;
-      } catch (error) {
-        resultDiv.innerHTML = "<p class='text-red-400'>Error in calculation</p>";
-      }
+// ===== ASTROLOGY CALCULATIONS =====
+function calculateSunSign(month, day) {
+  const signs = [
+    { sign: "Capricorn", start: [12, 22], end: [1, 19] },
+    { sign: "Aquarius", start: [1, 20], end: [2, 18] },
+    { sign: "Pisces", start: [2, 19], end: [3, 20] },
+    { sign: "Aries", start: [3, 21], end: [4, 19] },
+    { sign: "Taurus", start: [4, 20], end: [5, 20] },
+    { sign: "Gemini", start: [5, 21], end: [6, 20] },
+    { sign: "Cancer", start: [6, 21], end: [7, 22] },
+    { sign: "Leo", start: [7, 23], end: [8, 22] },
+    { sign: "Virgo", start: [8, 23], end: [9, 22] },
+    { sign: "Libra", start: [9, 23], end: [10, 22] },
+    { sign: "Scorpio", start: [10, 23], end: [11, 21] },
+    { sign: "Sagittarius", start: [11, 22], end: [12, 21] }
+  ];
+  for (const s of signs) {
+    if ((month === s.start[0] && day >= s.start[1]) || (month === s.end[0] && day <= s.end[1])) {
+      return s.sign;
     }
+  }
+}
 
-    /* ---------------------------
-       2. NUMEROLOGY CALCULATOR
-    ---------------------------- */
-    function calculateNumerology() {
-      const name = document.getElementById('num-name').value.toUpperCase();
-      const birthdate = document.getElementById('num-birthdate').value;
+function calculateDasha(year) {
+  const dashas = ["Ketu", "Venus", "Sun", "Moon", "Mars", "Rahu", "Jupiter", "Saturn", "Mercury"];
+  const startIndex = year % dashas.length;
+  let result = "";
+  for (let i = 0; i < dashas.length; i++) {
+    result += `${dashas[(startIndex + i) % dashas.length]} → `;
+  }
+  return result.slice(0, -3);
+}
 
-      const resultDiv = document.getElementById('numerology-result');
-      resultDiv.innerHTML = "<p class='text-gray-400'>Calculating...</p>";
+// ===== NUMEROLOGY =====
+function calculateNumerology(name, dob) {
+  const numbers = {};
+  const digits = dob.replace(/[^0-9]/g, '').split('').map(Number);
+  numbers.lifePath = digits.reduce((a, b) => a + b, 0);
+  while (numbers.lifePath > 9) numbers.lifePath = String(numbers.lifePath).split('').reduce((a, b) => +a + +b, 0);
+  numbers.destiny = name.replace(/[^a-zA-Z]/g, '').toUpperCase()
+    .split('').reduce((sum, char) => sum + (char.charCodeAt(0) - 64), 0);
+  while (numbers.destiny > 9) numbers.destiny = String(numbers.destiny).split('').reduce((a, b) => +a + +b, 0);
+  return numbers;
+}
 
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      let nameValue = 0;
-      for (let char of name) {
-        let pos = letters.indexOf(char);
-        if (pos !== -1) nameValue += (pos % 9) + 1;
-      }
+// ===== TAROT =====
+const tarotDeck = [
+  "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor",
+  "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit",
+  "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "Temperance",
+  "The Devil", "The Tower", "The Star", "The Moon", "The Sun",
+  "Judgement", "The World"
+];
 
-      let lifePath = birthdate.replace(/-/g,"").split("").reduce((a,b)=>a+parseInt(b),0);
-      while (lifePath > 9) lifePath = lifePath.toString().split("").reduce((a,b)=>a+parseInt(b),0);
+function drawTarot(count) {
+  const shuffled = tarotDeck.sort(() => 0.5 - Math.random());
+  const cards = shuffled.slice(0, count);
+  const container = document.getElementById('tarot-cards');
+  container.innerHTML = "";
+  cards.forEach(card => {
+    const div = document.createElement('div');
+    div.className = "tarot-card";
+    div.innerHTML = `<div class="front">?</div><div class="back">${card}</div>`;
+    div.onclick = () => div.classList.toggle('flip');
+    container.appendChild(div);
+  });
+  document.getElementById('tarot-result').innerText = `Your cards: ${cards.join(", ")}`;
+}
 
-      resultDiv.innerHTML = `
-        <h3 class="text-xl font-bold mb-2 text-indigo-400">Numerology Report</h3>
-        <p>Expression Number: ${reduceToSingleDigit(nameValue)}</p>
-        <p>Life Path Number: ${lifePath}</p>
-        <p>Destiny Number: ${reduceToSingleDigit(nameValue + lifePath)}</p>
-      `;
-    }
+// ===== AI PREDICTION =====
+async function aiPrediction(prompt, mode) {
+  if (mode === "free") {
+    const res = await fetch(`https://api.simplifiedai.com/predict?query=${encodeURIComponent(prompt)}`);
+    const data = await res.json();
+    return data.answer || "AI response not available.";
+  } else {
+    return "Offline Mode: This is a generic interpretation based on astrology, numerology, and tarot.";
+  }
+}
 
-    function reduceToSingleDigit(num) {
-      while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
-        num = num.toString().split("").reduce((a,b)=>a+parseInt(b),0);
-      }
-      return num;
-    }
+// ===== GENERATE ALL =====
+async function generateAll() {
+  const name = document.getElementById('name').value;
+  const dob = document.getElementById('dob').value;
+  const time = document.getElementById('time').value;
+  const place = document.getElementById('place').value;
+  const mode = document.querySelector('input[name="mode"]:checked').value;
 
-    /* ---------------------------
-       3. TAROT READING
-    ---------------------------- */
-    const tarotDeck = [
-      "The Fool","The Magician","The High Priestess","The Empress","The Emperor",
-      "The Hierophant","The Lovers","The Chariot","Strength","The Hermit",
-      "Wheel of Fortune","Justice","The Hanged Man","Death","Temperance",
-      "The Devil","The Tower","The Star","The Moon","The Sun","Judgement","The World"
-    ];
+  const date = new Date(dob);
+  const sunSign = calculateSunSign(date.getMonth() + 1, date.getDate());
+  const dasha = calculateDasha(date.getFullYear());
 
-    function drawTarot() {
-      const question = document.getElementById('tarot-question').value;
-      const mode = document.querySelector('input[name="tarot-mode"]:checked').value;
-      const spread = document.getElementById('tarot-spread').value;
-      const tarotResult = document.getElementById('tarot-result');
-      const tarotCardsDiv = document.getElementById('tarot-cards');
-      
-      tarotResult.innerHTML = "<p class='text-gray-400'>Drawing cards...</p>";
-      tarotCardsDiv.innerHTML = "";
+  document.getElementById('astro-result').innerHTML = `
+    <b>Sun Sign:</b> ${sunSign}<br>
+    <b>Dasha Sequence:</b> ${dasha}
+  `;
 
-      let count = 3;
-      if (spread === "celtic-cross") count = 10;
-      else if (spread === "relationship") count = 6;
-      else if (spread === "career") count = 5;
+  const num = calculateNumerology(name, dob);
+  document.getElementById('num-result').innerHTML = `
+    <b>Life Path:</b> ${num.lifePath}<br>
+    <b>Destiny Number:</b> ${num.destiny}
+  `;
 
-      const selectedCards = [];
-      for (let i = 0; i < count; i++) {
-        const randomIndex = Math.floor(Math.random() * tarotDeck.length);
-        selectedCards.push(tarotDeck[randomIndex]);
-      }
+  const prompt = `Predict life for ${name}, born on ${dob} at ${time} in ${place}. Include astrology, numerology, tarot aspects.`;
+  const aiText = await aiPrediction(prompt, mode);
+  document.getElementById('ai-result').innerText = aiText;
+}
 
-      if (mode === "offline") {
-        tarotResult.innerHTML = `<p class='text-indigo-400 font-bold'>Offline Reading:</p><p>${basicTarotInterpretation(selectedCards, question)}</p>`;
-      } else {
-        tarotResult.innerHTML = `<p class='text-gray-400'>Fetching AI interpretation...</p>`;
-        fetchAIInterpretation(selectedCards, question, mode).then(response => {
-          tarotResult.innerHTML = `<p class='text-indigo-400 font-bold'>AI Reading:</p><p>${response}</p>`;
-        }).catch(() => {
-          tarotResult.innerHTML = "<p class='text-red-400'>AI API failed. Showing offline interpretation.</p><p>" + basicTarotInterpretation(selectedCards, question) + "</p>";
-        });
-      }
-
-      selectedCards.forEach(card => {
-        tarotCardsDiv.innerHTML += `
-          <div class="tarot-card">
-            <img src="https://www.sacred-texts.com/tarot/pkt/img/${card.toLowerCase().replace(/ /g,'')}.jpg" alt="${card}">
-            <p class="text-sm">${card}</p>
-          </div>
-        `;
-      });
-    }
-
-    function basicTarotInterpretation(cards, question) {
-      return `Your question: ${question}. Cards drawn: ${cards.join(", ")}. This spread suggests important insights about your situation.`;
-    }
-
-    async function fetchAIInterpretation(cards, question, mode) {
-      if (mode === "freeAI") {
-        // Mock free API response
-        return `Free AI: Based on your question "${question}" and cards [${cards.join(", ")}], the reading suggests transformation and new opportunities.`;
-      } else if (mode === "openai") {
-        // Placeholder (replace with real OpenAI API logic)
-        return `OpenAI: Detailed interpretation for "${question}" with cards [${cards.join(", ")}].`;
-      }
-    }
-  </script>
+// ===== DOWNLOAD REPORT =====
+function downloadReport() {
+  const astro = document.getElementById('astro-result').innerText;
+  const num = document.getElementById('num-result').innerText;
+  const tarot = document.getElementById('tarot-result').innerText;
+  const ai = document.getElementById('ai-result').innerText;
+  const content = `Mystic Life Report\n\nAstrology:\n${astro}\n\nNumerology:\n${num}\n\nTarot:\n${tarot}\n\nAI Prediction:\n${ai}`;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = "Life_Report.txt";
+  link.click();
+}
+</script>
 </body>
 </html>
