@@ -3,289 +3,348 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Astrology + Numerology — High‑Accuracy (Single index.html)</title>
-    <meta name="description" content="Single‑file app: enter Name + Date + Time + Place → numerology suite, Western zodiac, Chinese zodiac, plus hooks for high‑accuracy Moon/Ascendant using ephemeris.">
+    <title>Poornika — Numerology & Astrology (Basic) — Single index.html</title>
+    <meta name="description" content="This microsite is a part of the Poornika main website. Enter your Name + DOB + Time + Place (text only). Fully offline numerology suite with high‑accuracy deterministic calculations; no lat/lon required." />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       html{scroll-behavior:smooth}
-      .card{ @apply bg-white/80 backdrop-blur rounded-2xl shadow border border-slate-200; }
+      .card{ @apply bg-white/90 backdrop-blur rounded-2xl shadow border border-slate-200; }
       .btn{ @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 font-medium shadow-sm border active:translate-y-px; }
       .btn-primary{ @apply bg-indigo-600 text-white border-indigo-700 hover:bg-indigo-700; }
       .btn-soft{ @apply bg-slate-50 text-slate-800 border-slate-200 hover:bg-slate-100; }
-      .mono{ font-feature-settings:"tnum" on,"lnum" on; font-variant-numeric:tabular-nums lining-nums; }
       .grid-auto{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; }
+      .mono{ font-feature-settings:"tnum" on,"lnum" on; font-variant-numeric:tabular-nums lining-nums; }
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-pink-50 text-slate-800">
     <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
       <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <h1 class="text-xl md:text-2xl font-semibold">Astrology + Numerology Suite <span class="text-xs align-middle">(Single‑file)</span></h1>
+        <div>
+          <h1 class="text-xl md:text-2xl font-semibold">Poornika — Numerology Suite</h1>
+          <p class="text-xs text-slate-600">This website is a part of the <b>Poornika</b> main website.</p>
+        </div>
         <nav class="hidden md:flex gap-2">
           <a class="btn btn-soft" href="#inputs">Inputs</a>
           <a class="btn btn-soft" href="#results">Results</a>
-          <a class="btn btn-soft" href="#notes">Accuracy</a>
+          <a class="btn btn-soft" href="#about">About</a>
         </nav>
       </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <!-- Inputs -->
       <section id="inputs" class="card p-6 space-y-4">
-        <h2 class="text-xl font-semibold">अपनी जानकारी भरें</h2>
-        <div class="grid md:grid-cols-3 gap-4">
+        <h2 class="text-xl font-semibold">अपनी जानकारी भरें (lat/lon की ज़रूरत नहीं)</h2>
+        <div class="grid md:grid-cols-4 gap-4">
           <label class="block"> 
             <span class="block text-sm font-medium">पूरा नाम (Name)</span>
             <input id="name" type="text" placeholder="e.g., Rahul Kumar" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" required>
           </label>
           <label class="block"> 
-            <span class="block text-sm font-medium">जन्म‑तिथि (Date)</span>
+            <span class="block text-sm font-medium">जन्म‑तिथि</span>
             <input id="dob" type="date" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" required>
           </label>
           <label class="block"> 
-            <span class="block text-sm font-medium">जन्म‑समय (Local Time)</span>
-            <input id="tob" type="time" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" required>
-          </label>
-          <label class="block md:col-span-2">
-            <span class="block text-sm font-medium">जन्म‑स्थान (Place / City, Country)</span>
-            <input id="pob" type="text" placeholder="e.g., Lucknow, India" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" required>
-            <span class="text-xs text-slate-500">Auto‑geocode via OpenStreetMap (Nominatim). चाहें तो नीचे lat/lon खुद भरें।</span>
+            <span class="block text-sm font-medium">जन्म‑समय (optional)</span>
+            <input id="tob" type="time" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
           </label>
           <label class="block"> 
-            <span class="block text-sm font-medium">UTC Offset (±hh:mm)</span>
-            <input id="utcOffset" type="text" placeholder="e.g., +05:30" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
-            <span class="text-xs text-slate-500">अगर खाली रहा तो हम auto‑detect की कोशिश करेंगे; न हो पाया तो ब्राउज़र offset ले लेंगे।</span>
+            <span class="block text-sm font-medium">जन्म‑स्थान (City, Country)</span>
+            <input id="pob" type="text" placeholder="e.g., Lucknow, India" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
           </label>
-          <div class="md:col-span-3 flex flex-wrap gap-2 pt-2">
-            <button id="btnSample" class="btn btn-soft" type="button">Fill Sample</button>
-            <button id="btnCalc" class="btn btn-primary" type="button">Calculate</button>
-            <button id="btnExport" class="btn btn-soft" type="button">Export JSON</button>
-            <span id="status" class="text-sm text-slate-600"></span>
-          </div>
         </div>
-        <details class="mt-2">
-          <summary class="cursor-pointer text-sm text-slate-600">Advanced (manual lat/lon)</summary>
-          <div class="grid md:grid-cols-3 gap-4 mt-2">
-            <label class="block"> 
-              <span class="block text-sm font-medium">Latitude</span>
-              <input id="lat" type="number" step="any" placeholder="26.8467" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
-            </label>
-            <label class="block"> 
-              <span class="block text-sm font-medium">Longitude</span>
-              <input id="lon" type="number" step="any" placeholder="80.9462" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
-            </label>
-            <label class="block"> 
-              <span class="block text-sm font-medium">Timezone IANA (optional)</span>
-              <input id="iana" type="text" placeholder="Asia/Kolkata" class="w-full rounded-xl border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500">
-            </label>
-          </div>
-        </details>
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <label class="inline-flex items-center gap-2 text-sm"><input id="yAsVowel" type="checkbox" class="rounded border-slate-300" checked> Y को vowel मानें</label>
+          <label class="inline-flex items-center gap-2 text-sm"><input id="keepMaster" type="checkbox" class="rounded border-slate-300" checked> Master numbers (11/22/33) रखें</label>
+          <button id="btnSample" class="btn btn-soft" type="button">Fill Sample</button>
+          <button id="btnCalc" class="btn btn-primary" type="button">Calculate</button>
+          <button id="btnExport" class="btn btn-soft" type="button">Export JSON</button>
+          <span id="status" class="text-sm text-slate-600"></span>
+        </div>
       </section>
 
+      <!-- Results -->
       <section id="results" class="space-y-4">
         <h3 class="text-xl font-semibold">Results</h3>
         <div class="grid-auto">
-          <div class="card p-5"><h4 class="font-semibold">Western Sun Sign</h4><div id="sunOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Chinese Zodiac</h4><div id="chineseOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Life Path (DOB)</h4><div id="lifePathOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Destiny / Expression (Name)</h4><div id="destinyOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Soul Urge (Vowels)</h4><div id="soulOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Personality (Consonants)</h4><div id="personalityOut" class="mt-1"></div></div>
-          <div class="card p-5"><h4 class="font-semibold">Name Number (Chaldean)</h4><div id="chaldeanOut" class="mt-1"></div></div>
-          <div class="card p-5 md:col-span-2"><h4 class="font-semibold">Lal Kitab‑style Tips (Rule‑based)</h4><div id="lalOut" class="mt-1"></div><p class="text-xs text-slate-500 mt-2">Disclaimer: वास्तविक Lal Kitab उपाय विशेषज्ञ‑कुंडली पर आधारित होते हैं; यहाँ सामान्यीकृत नियम हैं।</p></div>
-          <div class="card p-5 md:col-span-3"><h4 class="font-semibold">Life Prediction Summary</h4><div id="summaryOut" class="mt-1"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Sun Sign (Date‑based)</h4><div id="sunOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Chinese Zodiac (Year)</h4><div id="chineseOut"></div></div>
+
+          <div class="card p-5"><h4 class="font-semibold">Life Path</h4><div id="lifePathOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Birthday Number</h4><div id="birthdayOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Expression / Destiny (Pythagorean)</h4><div id="destinyOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Soul Urge (Vowels)</h4><div id="soulOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Personality (Consonants)</h4><div id="personalityOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Chaldean Name Total</h4><div id="chaldeanOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Maturity (Life Path + Expression)</h4><div id="maturityOut"></div></div>
+
+          <div class="card p-5"><h4 class="font-semibold">Karmic Debt</h4><div id="karmicDebtOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Karmic Lessons (Missing Letters)</h4><div id="karmicLessonsOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Hidden Passion (Most Frequent)</h4><div id="hiddenPassionOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Balance Number</h4><div id="balanceOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Subconscious Self</h4><div id="subconsciousOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Rational Thought</h4><div id="rationalOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Cornerstone / Capstone</h4><div id="cornerCapOut"></div></div>
+          <div class="card p-5"><h4 class="font-semibold">Planes of Expression</h4><div id="planesOut"></div></div>
+
+          <div class="card p-5 md:col-span-2"><h4 class="font-semibold">Pinnacles (4) & Challenges (3)</h4><div id="pinnacleOut"></div></div>
+          <div class="card p-5 md:col-span-2"><h4 class="font-semibold">Personal Year / Month / Day</h4><div id="personalCycleOut"></div></div>
+
+          <div class="card p-5 md:col-span-3"><h4 class="font-semibold">Summary</h4><div id="summaryOut"></div></div>
         </div>
       </section>
 
-      <section id="notes" class="card p-6">
-        <h3 class="text-lg font-semibold">Accuracy Notes</h3>
+      <section id="about" class="card p-6">
+        <h3 class="text-lg font-semibold">About accuracy (bina lat/lon mode)</h3>
         <ul class="list-disc pl-6 text-slate-700 space-y-1 mt-2">
-          <li>Numerology, Western Sun Sign, Chinese Zodiac — ऑफलाइन व deterministic।</li>
-          <li>Moon / Ascendant जैसी high‑precision चीज़ों के लिए ephemeris + सही timezone ज़रूरी। इस single‑file में geocode + offset auto‑help दी गई है; चाहें तो UTC offset खुद दें।</li>
-          <li>“Zero error” वास्तविक दुनिया में संभव नहीं (DST history, leap seconds, cusp days), पर यह ऐप practical high‑accuracy देता है।</li>
+          <li>Numerology results पूरी तरह deterministic हैं — किसी external API पर निर्भर नहीं।</li>
+          <li>Sun sign और Chinese zodiac तारीख/वर्ष आधारित हैं; cusp days पर schools में थोड़ा अंतर मिल सकता है।</li>
+          <li>ये microsite <b>Poornika</b> main website का हिस्सा है (embeddable section)।</li>
         </ul>
       </section>
+
+      <footer class="py-10 text-center text-slate-500 text-sm">© Poornika — Single‑file build for GitHub Pages.</footer>
     </main>
 
     <script>
-      // ========== Helper: DOM ==========
+      // ===== Utilities =====
       const $ = (id)=>document.getElementById(id);
-      const setHTML = (id, html)=>{ $(id).innerHTML = html; };
-      const status = (msg)=>{ $('status').textContent = msg || ''; };
+      const text = (id, v)=>{ $(id).innerHTML = v; };
+      const safe = (s)=> (s||'').toString();
+      const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-      // ========== Geocode (OSM Nominatim) ==========
-      async function geocode(place){
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}&limit=1&addressdetails=1`;
-        const res = await fetch(url, { headers: { 'Accept-Language':'en' } });
-        if(!res.ok) throw new Error('Geocode failed');
-        const j = await res.json();
-        if(!j.length) throw new Error('Place not found');
-        return { lat: parseFloat(j[0].lat), lon: parseFloat(j[0].lon), display: j[0].display_name };
+      function onlyLetters(s){ return safe(s).toUpperCase().replace(/[^A-Z]/g,''); }
+      function namesParts(s){ return safe(s).trim().split(/\s+/).filter(Boolean); }
+
+      function reduceNumber(n, keepMaster=true){
+        n = Math.abs(+n||0);
+        const master = (x)=> keepMaster && (x===11||x===22||x===33);
+        while(n>9 && !master(n)) n = (''+n).split('').reduce((a,b)=>a+ +b,0);
+        return n;
       }
 
-      // ========== Time helpers ==========
-      function parseOffset(off){
-        // "+05:30" → 5.5 hours
-        if(!off) return null;
-        const m = off.trim().match(/^([+-])(\d{1,2})(?::?(\d{2}))?$/);
-        if(!m) return null;
-        const sign = m[1]==='-'?-1:1; const hh=+m[2]; const mm=+(m[3]||0);
-        return sign*(hh + mm/60);
-      }
-      function toUTC(dateStr, timeStr, offsetHours){
-        const [y,m,d] = dateStr.split('-').map(Number);
-        const [hh,mm] = timeStr.split(':').map(Number);
-        const localMillis = Date.UTC(y,m-1,d,hh,mm);
-        // subtract offset to get UTC
-        const utcMillis = localMillis - (offsetHours*3600*1000);
-        return new Date(utcMillis);
-      }
-
-      // ========== Numerology ==========
-      const VOWELS = new Set(['A','E','I','O','U']);
+      // Pythagorean mapping
       const P_MAP = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+      // Chaldean mapping
       const CH_MAP = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
-      const keepMaster = (n)=> (n===11||n===22||n===33);
-      function digitalRoot(n){ while(n>9 && !keepMaster(n)){ n = (''+n).split('').reduce((a,b)=>a+ +b,0); } return n; }
-      function lettersOnly(s){ return (s||'').toUpperCase().replace(/[^A-Z]/g,''); }
-      function sumMap(name, map, filter){
-        const s = lettersOnly(name).split('').filter(ch=>filter?filter(ch):true);
-        const total = s.reduce((acc,ch)=> acc + (map[ch]||0), 0);
-        return digitalRoot(total);
-      }
-      function lifePathFromDOB(d){ // yyyy-mm-dd
-        const nums = d.replace(/-/g,'').split('').map(Number);
-        let total = nums.reduce((a,b)=>a+b,0);
-        return digitalRoot(total);
+
+      function sumByMap(str, map, filterFn){
+        const arr = onlyLetters(str).split('').filter(ch=> filterFn? filterFn(ch): true);
+        return arr.reduce((acc,ch)=> acc + (map[ch]||0), 0);
       }
 
-      // ========== Western Sun Sign ==========
-      function sunSign(dateStr){
-        // Tropical zodiac by date ranges (cusp edges may vary)
-        const [y,m,d] = dateStr.split('-').map(Number);
-        const md = (m*100)+d;
-        const R = [
-          ['Capricorn', 1222, 119],
-          ['Aquarius', 120, 218],
-          ['Pisces', 219, 320],
-          ['Aries', 321, 419],
-          ['Taurus', 420, 520],
-          ['Gemini', 521, 620],
-          ['Cancer', 621, 722],
-          ['Leo', 723, 822],
-          ['Virgo', 823, 922],
-          ['Libra', 923, 1022],
-          ['Scorpio', 1023, 1121],
-          ['Sagittarius', 1122, 1221]
-        ];
-        for(const [name, start, end] of R){
-          if(start <= end){ if(md>=start && md<=end) return name; }
-          else{ if(md>=start || md<=end) return name; }
+      function vowelsSet(yAsVowel){
+        const v = new Set(['A','E','I','O','U']);
+        if(yAsVowel) v.add('Y');
+        return v;
+      }
+
+      // ===== Core Numbers =====
+      function lifePath(dateStr, keepMaster){
+        const nums = dateStr.replace(/-/g,'').split('').map(Number);
+        return reduceNumber(nums.reduce((a,b)=>a+b,0), keepMaster);
+      }
+      function birthdayNumber(dateStr, keepMaster){
+        const d = +dateStr.split('-')[2];
+        return reduceNumber(d, keepMaster);
+      }
+      function expressionNumber(name, keepMaster){ return reduceNumber(sumByMap(name, P_MAP), keepMaster); }
+      function soulUrge(name, yAsVowel, keepMaster){
+        const V = vowelsSet(yAsVowel);
+        return reduceNumber(sumByMap(name, P_MAP, ch=> V.has(ch)), keepMaster);
+      }
+      function personalityNumber(name, yAsVowel, keepMaster){
+        const V = vowelsSet(yAsVowel);
+        return reduceNumber(sumByMap(name, P_MAP, ch=> !V.has(ch)), keepMaster);
+      }
+      function chaldeanNameNumbers(name, keepMaster){
+        const total = sumByMap(name, CH_MAP);
+        return { total, single: reduceNumber(total, keepMaster) };
+      }
+      function maturityNumber(life, expression, keepMaster){ return reduceNumber(life + expression, keepMaster); }
+
+      // ===== Karmic Debt & Lessons =====
+      function karmicDebtFrom(n){ return [13,14,16,19].includes(n) ? n : null; }
+      function karmicDebts({life, expression, soul, personality, birthday}){
+        const arr = [life, expression, soul, personality, birthday];
+        const kd = arr.map(karmicDebtFrom).filter(Boolean);
+        return [...new Set(kd)];
+      }
+      function karmicLessons(name){
+        const present = new Set(onlyLetters(name).split(''));
+        const missing = LETTERS.filter(l=> !present.has(l));
+        return missing; // letters missing indicate lessons
+      }
+      function hiddenPassion(name){
+        const counts = {}; onlyLetters(name).split('').forEach(ch=> counts[ch]=(counts[ch]||0)+1);
+        let max=0; for(const k in counts) max=Math.max(max, counts[k]);
+        const top = Object.entries(counts).filter(([,v])=>v===max).map(([k])=>k);
+        return { letters: top, count: max };
+      }
+      function balanceNumber(name, keepMaster){
+        const parts = namesParts(name); if(!parts.length) return 0;
+        const sum = parts.reduce((acc,p)=> acc + (P_MAP[onlyLetters(p)[0]]||0), 0);
+        return reduceNumber(sum, keepMaster);
+      }
+      function subconsciousSelf(name){
+        const values = new Set(onlyLetters(name).split('').map(ch=> P_MAP[ch]||0));
+        return values.size; // 1..9
+      }
+      function rationalThought(name, dateStr, keepMaster){
+        const initials = namesParts(name).map(p=> P_MAP[onlyLetters(p)[0]]||0).reduce((a,b)=>a+b,0);
+        const day = +dateStr.split('-')[2];
+        return reduceNumber(initials + day, keepMaster);
+      }
+      function cornerstoneCapstone(name){
+        const parts = namesParts(name); if(!parts.length) return {corner:'',cap:''};
+        const first = onlyLetters(parts[0]);
+        const last = onlyLetters(parts[parts.length-1]);
+        return { corner: first[0]||'', cap: last[last.length-1]||'' };
+      }
+
+      // Planes of Expression (common grouping)
+      const PLANE = {
+        PHYSICAL: new Set('DFMPV'.split('')),
+        MENTAL:   new Set('CGJLRU'.split('')),
+        EMOTIONAL:new Set('AEHINOSXY'.split('')),
+        INTUITIVE:new Set('BKTWQZ'.split('')),
+      };
+      function planesOfExpression(name){
+        const letters = onlyLetters(name).split('');
+        const res = {PHYSICAL:0,MENTAL:0,EMOTIONAL:0,INTUITIVE:0};
+        for(const ch of letters){
+          for(const k in PLANE){ if(PLANE[k].has(ch)) res[k]++; }
         }
+        return res;
+      }
+
+      // ===== Date‑based cycles =====
+      function reduceDateNum(n, keepMaster){ return reduceNumber(n, keepMaster); }
+      function monthNum(d){ return +d.split('-')[1]; }
+      function dayNum(d){ return +d.split('-')[2]; }
+      function yearNum(d){ return +d.split('-')[0]; }
+      function sumDigits(n){ return (''+n).split('').reduce((a,b)=>a+ +b,0); }
+
+      function pinnacleNumbers(dob, keepMaster){
+        const M = reduceDateNum(monthNum(dob), keepMaster);
+        const D = reduceDateNum(dayNum(dob), keepMaster);
+        const Y = reduceDateNum(yearNum(dob), keepMaster);
+        const P1 = reduceDateNum(M + D, keepMaster);
+        const P2 = reduceDateNum(D + Y, keepMaster);
+        const P3 = reduceDateNum(P1 + P2, keepMaster);
+        const P4 = reduceDateNum(M + Y, keepMaster);
+        const C1 = Math.abs(M - D); const C2 = Math.abs(D - Y); const C3 = Math.abs(C1 - C2);
+        return { pinnacles:[P1,P2,P3,P4].map(n=>reduceDateNum(n,keepMaster)), challenges:[C1,C2,C3].map(n=>reduceDateNum(n,keepMaster)) };
+      }
+
+      function personalYear(dateStr, now, keepMaster){
+        const n = now || new Date();
+        const currentYear = n.getFullYear();
+        const month = +dateStr.split('-')[1];
+        const day   = +dateStr.split('-')[2];
+        const base = reduceNumber(sumDigits(currentYear) + reduceNumber(month,false) + reduceNumber(day,false), keepMaster);
+        return base;
+      }
+      function personalMonth(personalYearNum, month, keepMaster){
+        return reduceNumber(personalYearNum + reduceNumber(month,false), keepMaster);
+      }
+      function personalDay(personalMonthNum, day, keepMaster){
+        return reduceNumber(personalMonthNum + reduceNumber(day,false), keepMaster);
+      }
+
+      // ===== Western & Chinese =====
+      function sunSign(dateStr){
+        const [y,m,d] = dateStr.split('-').map(Number); const md = m*100+d;
+        const R = [
+          ['Capricorn',1222,119],['Aquarius',120,218],['Pisces',219,320],['Aries',321,419],['Taurus',420,520],['Gemini',521,620],['Cancer',621,722],['Leo',723,822],['Virgo',823,922],['Libra',923,1022],['Scorpio',1023,1121],['Sagittarius',1122,1221]
+        ];
+        for(const [name,start,end] of R){ if(start<=end? (md>=start&&md<=end):(md>=start||md<=end)) return name; }
         return 'Capricorn';
       }
+      function chineseZodiac(year){ const a=['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig']; const idx=(year-1900)%12; return a[(idx+12)%12]; }
 
-      // ========== Chinese Zodiac ==========
-      function chineseZodiac(year){
-        const animals = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
-        const idx = (year - 1900) % 12; // 1900=Rat
-        return animals[(idx+12)%12];
-      }
-
-      // ========== Simple Lal Kitab style tips (rule‑based demo) ==========
-      function lalKitabTips(lifePath, sun){
-        const tips=[];
-        if(lifePath===1) tips.push('नेतृत्व गुणों पर काम करें, egoless initiative.');
-        if(lifePath===2) tips.push('सहयोग और संतुलन — घर में चाँदी का छोटा सिक्का शुभ।');
-        if(lifePath===3) tips.push('रचनात्मकता; पीला/हल्दी दान समय‑समय पर।');
-        if(lifePath===4) tips.push('अनुशासन; घर/कार्यस्थल की व्यवस्था बनाए रखें।');
-        if(lifePath===5) tips.push('यात्रा/परिवर्तन शुभ; हरियाली लगाएँ।');
-        if(lifePath===6) tips.push('सेवा/परिवार; मीठा दान करें।');
-        if(lifePath===7) tips.push('आध्यात्म; शनिवार को दान।');
-        if(lifePath===8) tips.push('कर्म/न्याय; काले तिल/सरसो का तेल दान।');
-        if(lifePath===9) tips.push('सेवा/मानवता; लाल वस्त्र/मंगल वार दान।');
-        if(sun==='Capricorn' || sun==='Aquarius') tips.push('शनिवार को लोहे/काले रंग से संबंधित दान शुभ।');
-        return tips;
-      }
-
-      // ========== Summary ==========
-      function buildSummary({name,dateStr,lifePath,destiny,soul,personality,sun,chinese}){
-        return `नाम: <b>${name}</b><br>जन्म‑तिथि: <b>${dateStr}</b><br>`+
-          `Sun Sign: <b>${sun}</b> · Chinese: <b>${chinese}</b><br>`+
-          `Life Path: <b>${lifePath}</b> · Destiny: <b>${destiny}</b> · Soul Urge: <b>${soul}</b> · Personality: <b>${personality}</b>`;
-      }
-
-      // ========== Main Calculate ==========
-      async function calculate(){
+      // ===== Render =====
+      function renderAll(){
         try{
-          status('Geocoding…');
-          const name = $('name').value.trim();
-          const dateStr = $('dob').value; // yyyy-mm-dd
-          const timeStr = $('tob').value; // HH:mm
-          const place = $('pob').value.trim();
-          if(!name || !dateStr || !timeStr || !place) { alert('कृपया सभी आवश्यक फ़ील्ड भरें'); return; }
+          const name = safe($("name").value).trim();
+          const dob  = safe($("dob").value);
+          if(!name || !dob) { alert('Name और DOB आवश्यक हैं'); return; }
+          const yAsVowel = $('yAsVowel').checked; const keepMaster = $('keepMaster').checked;
 
-          // geocode, unless lat/lon provided
-          let lat = parseFloat($('lat').value); let lon = parseFloat($('lon').value);
-          if(Number.isNaN(lat) || Number.isNaN(lon)){
-            const g = await geocode(place); lat=g.lat; lon=g.lon; $('lat').value=lat; $('lon').value=lon; status(`Location: ${g.display}`);
-          }
+          const life = lifePath(dob, keepMaster);
+          const bday = birthdayNumber(dob, keepMaster);
+          const expr = expressionNumber(name, keepMaster);
+          const soul = soulUrge(name, yAsVowel, keepMaster);
+          const pers = personalityNumber(name, yAsVowel, keepMaster);
+          const chald= chaldeanNameNumbers(name, keepMaster);
+          const matur= maturityNumber(life, expr, keepMaster);
 
-          // offset handling
-          let offset = parseOffset($('utcOffset').value);
-          if(offset===null){
-            // As a fallback use the browser's current offset (approx only)
-            offset = - (new Date().getTimezoneOffset())/60; // hours
-            status(`Offset≈ ${offset}`);
-          }
+          const kd = karmicDebts({life:life, expression:expr, soul:soul, personality:pers, birthday:bday});
+          const lessons = karmicLessons(name);
+          const hp = hiddenPassion(name);
+          const bal = balanceNumber(name, keepMaster);
+          const sub = subconsciousSelf(name);
+          const rat = rationalThought(name, dob, keepMaster);
+          const cc  = cornerstoneCapstone(name);
+          const planes = planesOfExpression(name);
 
-          const utc = toUTC(dateStr, timeStr, offset);
+          const pc = pinnacleNumbers(dob, keepMaster);
+          const now = new Date();
+          const pYear = personalYear(dob, now, keepMaster);
+          const pMonth = personalMonth(pYear, now.getMonth()+1, keepMaster);
+          const pDay = personalDay(pMonth, now.getDate(), keepMaster);
 
-          // Numerology results
-          const lifePath = lifePathFromDOB(dateStr);
-          const letters = lettersOnly(name);
-          const destiny = sumMap(letters, P_MAP);
-          const soul = sumMap(letters, P_MAP, ch=> VOWELS.has(ch) || ch==='Y');
-          const personality = sumMap(letters, P_MAP, ch=> !VOWELS.has(ch) && ch!=='Y');
-          const chaldean = sumMap(letters, CH_MAP);
-
-          // Astrology basics
-          const sun = sunSign(dateStr);
-          const chinese = chineseZodiac(new Date(dateStr).getFullYear());
+          const sun = sunSign(dob);
+          const cz = chineseZodiac(+dob.split('-')[0]);
 
           // Outputs
-          setHTML('sunOut', `${sun}`);
-          setHTML('chineseOut', `${chinese}`);
-          setHTML('lifePathOut', `${lifePath}`);
-          setHTML('destinyOut', `${destiny}`);
-          setHTML('soulOut', `${soul}`);
-          setHTML('personalityOut', `${personality}`);
-          setHTML('chaldeanOut', `${chaldean}`);
+          text('sunOut', sun);
+          text('chineseOut', cz);
+          text('lifePathOut', life);
+          text('birthdayOut', bday);
+          text('destinyOut', expr);
+          text('soulOut', soul);
+          text('personalityOut', pers);
+          text('chaldeanOut', `${chald.total} → ${chald.single}`);
+          text('maturityOut', matur);
+          text('karmicDebtOut', kd.length? kd.join(', '): 'None');
+          text('karmicLessonsOut', lessons.length? lessons.join(' ') : 'None (All letters present)');
+          text('hiddenPassionOut', hp.count? `${hp.letters.join(', ')} (×${hp.count})` : '—');
+          text('balanceOut', bal);
+          text('subconsciousOut', sub);
+          text('rationalOut', rat);
+          text('cornerCapOut', `Cornerstone: ${cc.corner || '—'} · Capstone: ${cc.cap || '—'}`);
+          text('planesOut', `Physical: ${planes.PHYSICAL} · Mental: ${planes.MENTAL} · Emotional: ${planes.EMOTIONAL} · Intuitive: ${planes.INTUITIVE}`);
 
-          const tips = lalKitabTips(lifePath, sun);
-          setHTML('lalOut', `<ul class="list-disc pl-6">${tips.map(t=>`<li>${t}</li>`).join('')}</ul>`);
-          setHTML('summaryOut', buildSummary({name,dateStr,lifePath,destiny,soul,personality,sun,chinese}));
+          text('pinnacleOut', `Pinnacles: ${pc.pinnacles.join(' — ')}<br>Challenges: ${pc.challenges.join(' — ')}`);
+          text('personalCycleOut', `Personal Year: ${pYear} · Month: ${pMonth} · Day: ${pDay}`);
 
-          status('Done');
+          const pob = safe($("pob").value).trim();
+          const time = safe($("tob").value).trim();
+          text('summaryOut', `नाम: <b>${name}</b>${pob? ' · स्थान: <b>'+pob+'</b>':''}${time? ' · समय: <b>'+time+'</b>':''}<br>`+
+            `Life Path <b>${life}</b>, Expression <b>${expr}</b>, Soul Urge <b>${soul}</b>, Personality <b>${pers}</b>, Birthday <b>${bday}</b>, Maturity <b>${matur}</b><br>`+
+            `Chaldean Total <b>${chald.total}</b> → <b>${chald.single}</b> · Sun <b>${sun}</b> · Chinese <b>${cz}</b>`);
 
-          window.__calc = { name, dateStr, timeStr, place, lat, lon, offset, lifePath, destiny, soul, personality, chaldean, sun, chinese, utc: utc.toISOString() };
-        }catch(err){
-          console.error(err); alert('Error: '+err.message); status('');
-        }
+          $('status').textContent = 'Done';
+
+          window.__result = { name, dob, time, pob, settings:{ yAsVowel, keepMaster }, numbers:{ life, bday, expr, soul, pers, chald, matur, kd, lessons, hp, bal, sub, rat, cc, planes, pc, pYear, pMonth, pDay, sun, cz } };
+        }catch(e){ console.error(e); alert('Error: '+e.message); $('status').textContent=''; }
       }
 
-      // ========== Buttons ==========
-      $('btnCalc').addEventListener('click', calculate);
+      $('btnCalc').addEventListener('click', renderAll);
       $('btnSample').addEventListener('click', ()=>{
-        $('name').value = 'Rahul Kumar';
-        $('dob').value = '1995-08-15';
-        $('tob').value = '14:25';
-        $('pob').value = 'Lucknow, India';
-        $('utcOffset').value = '+05:30';
+        $('name').value='Rahul Kumar';
+        $('dob').value='1995-08-15';
+        $('tob').value='14:25';
+        $('pob').value='Lucknow, India';
       });
       $('btnExport').addEventListener('click', ()=>{
-        const data = window.__calc || {};
-        const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href=url; a.download='astrology_numerology.json'; a.click(); URL.revokeObjectURL(url);
+        try{
+          const data = window.__result || {};
+          const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+          const url = URL.createObjectURL(blob);
+          const a=document.createElement('a'); a.href=url; a.download='poornika_numerology_result.json'; a.click(); URL.revokeObjectURL(url);
+        }catch(e){ alert('Export failed'); }
       });
     </script>
   </body>
