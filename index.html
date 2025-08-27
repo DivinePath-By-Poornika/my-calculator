@@ -2,32 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Divine Path • Tarot • Astrology • Numerology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Welcome to the Divine Path | Tarot by Poonam</title>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- GSAP + jsPDF (Free CDNs) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root{
     --bg:#0b0d10;
     --card:#11141aee;
-    --muted:#a8b0bf;
+    --muted:#9aa3af;
     --text:#e7e9ee;
-    --brand:#ffd166;      /* gold */
-    --brand-2:#8ec5ff;    /* blue */
-    --accent:#e08cff;     /* magenta */
+    --brand:#ffd166;
+    --brand-2:#8ec5ff;
+    --accent:#e08cff;
     --ok:#4ade80;
-    --warn:#f59e0b;
-    --bad:#ef4444;
     --radius:18px;
     --shadow: 0 10px 30px rgba(0,0,0,.4);
-    --glass: blur(12px) saturate(160%);
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -44,35 +36,33 @@
 
   /* NAV */
   .nav{
-    position:sticky; top:0; z-index:60;
-    backdrop-filter:var(--glass);
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:saturate(140%) blur(10px);
     background: linear-gradient(180deg, #0b0d10cc, #0b0d10aa);
     border-bottom:1px solid #1f2530;
   }
   .nav .wrap{
-    max-width:1180px; margin:auto; padding:14px 20px;
+    max-width:1100px; margin:auto; padding:14px 20px;
     display:flex; align-items:center; justify-content:space-between; gap:16px;
   }
   .brand{
     font-family:"Playfair Display",serif;
-    font-weight:700; letter-spacing:.3px; color:var(--brand);
+    font-weight:700; letter-spacing:.5px; color:var(--brand);
     display:flex; align-items:center; gap:.6rem;
-    font-size:1.15rem;
   }
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
-  .nav a{color:var(--text);text-decoration:none;font-weight:700;opacity:.95;font-size:.95rem}
-  .nav ul{display:flex;gap:20px;list-style:none}
+  .nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.9}
+  .nav ul{display:flex;gap:22px;list-style:none}
   .nav a:hover{color:var(--brand)}
-  .right-controls{display:flex;align-items:center;gap:10px}
 
-  /* GLASS BUTTONS / FLOATING PILLS */
-  .btn, .ghost, .pill-btn{
+  /* GLASSY BUTTONS */
+  .btn, .ghost{
     position:relative; isolation:isolate;
     display:inline-flex; align-items:center; gap:.55rem;
-    padding:.85rem 1.1rem; border-radius:999px; text-decoration:none;
+    padding:.9rem 1.15rem; border-radius:999px; text-decoration:none;
     font-weight:800; transform:translateY(0) scale(1); transition:.35s ease;
     box-shadow:0 10px 24px rgba(0,0,0,.35);
-    overflow:hidden; backdrop-filter: var(--glass);
+    overflow:hidden; backdrop-filter: blur(10px) saturate(140%);
   }
   .btn{
     background:linear-gradient(135deg, #ffffff33, #ffffff12),
@@ -83,69 +73,59 @@
     background:linear-gradient(135deg,#1a2030aa,#0f1320aa);
     color:#c7ceda; border:1px solid #3a455c;
   }
-  .pill-btn{
-    background:linear-gradient(135deg,#192033aa,#0f1320aa);
-    color:#d6def1; border:1px solid #3a4560; font-size:.9rem; padding:.6rem .9rem
-  }
-  .btn::before, .ghost::before, .pill-btn::before{
+  .btn::before, .ghost::before{
     content:""; position:absolute; inset:auto auto 8% 10%; width:86%; height:42%;
     background:radial-gradient(120% 120% at 50% 0%, #ffffff80 0%, #ffffff10 55%, transparent 70%);
     border-radius:999px; filter:blur(2px); opacity:.7; pointer-events:none;
     transform:translateY(0); transition:transform .35s ease,opacity .35s ease;
   }
-  .btn::after, .ghost::after, .pill-btn::after{
-    content:""; position:absolute; top:10%; right:12%; width:16px; height:16px; border-radius:50%;
+  .btn::after, .ghost::after{
+    content:""; position:absolute; top:10%; right:12%; width:18px; height:18px; border-radius:50%;
     background:radial-gradient(circle at 30% 30%, #fff8 0%, #fff2 45%, #fff0 70%);
     box-shadow:inset 0 0 10px #fff3, 0 8px 14px #0004; filter:blur(.2px);
     animation:float 3.2s ease-in-out infinite;
   }
-  .btn:hover, .ghost:hover, .pill-btn:hover{ transform:translateY(-4px) scale(1.02); box-shadow:0 16px 28px rgba(0,0,0,.45)}
-  .btn:active, .ghost:active, .pill-btn:active{ transform:translateY(0) scale(.99) }
-  .btn:hover::before, .ghost:hover::before, .pill-btn:hover::before{ transform:translateY(-3px); opacity:.9 }
+  .btn:hover, .ghost:hover{ transform:translateY(-3px) scale(1.02); box-shadow:0 16px 28px rgba(0,0,0,.45)}
+  .btn:active, .ghost:active{ transform:translateY(0) scale(.99) }
+  .btn:hover::before, .ghost:hover::before{ transform:translateY(-3px); opacity:.9 }
   @keyframes float{ 0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-6px)} }
 
   /* HERO */
   .hero{
     position:relative; overflow:hidden;
     display:grid; place-items:center; text-align:center;
-    min-height:88vh;
+    min-height:78vh;
   }
   .hero .stars{position:absolute; inset:-20% -10%; background:url('https://images.unsplash.com/photo-1543722530-d2c3201371e7?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat; filter:brightness(.35) contrast(1.05) saturate(1.05); transform:scale(1.05)}
   .hero .veil{position:absolute; inset:0; background:radial-gradient(60% 60% at 50% 40%, #00000000 0%, #0b0d10 90%)}
-  .hero .aura{position:absolute; inset:-10%; background:
-    radial-gradient(600px 280px at 20% 30%, #8ec5ff22 0%, transparent 60%),
-    radial-gradient(600px 280px at 80% 40%, #e08cff22 0%, transparent 60%);}
-  .hero .floating-cards{position:absolute; inset:0; pointer-events:none}
-  .hero .content{position:relative; padding:0 20px; max-width:980px; animation:fadeUp .9s ease both}
+  .hero .content{position:relative; padding:0 20px; max-width:900px; animation:fadeUp .9s ease both}
   .kicker{
-    color:var(--brand); font-weight:800; letter-spacing:.18em; text-transform:uppercase; font-size:.82rem; opacity:.95
+    color:var(--brand); font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:.82rem; opacity:.9
   }
   .h1{
-    font-family:"Playfair Display",serif; font-size:clamp(2.6rem,5vw,3.9rem);
+    font-family:"Playfair Display",serif; font-size:clamp(2.4rem,5vw,3.4rem);
     line-height:1.1; margin:.6rem 0 1rem;
     text-shadow:0 10px 30px rgba(0,0,0,.6);
   }
-  .sub{ max-width:720px; margin:auto; color:var(--muted); font-size:1.06rem }
-  .hero .cta{margin-top:1.6rem; gap:12px; display:flex; justify-content:center; flex-wrap:wrap}
+  .sub{ max-width:680px; margin:auto; color:var(--muted); font-size:1.02rem }
+  .hero .cta{margin-top:1.6rem; gap:12px}
 
   /* SECTION WRAPPER */
-  .section{max-width:1180px; margin:84px auto; padding:0 20px}
+  .section{max-width:1100px; margin:72px auto; padding:0 20px}
   .section h2{
-    font-family:"Playfair Display",serif; font-size:clamp(1.9rem,3.2vw,2.4rem);
-    margin-bottom:12px
+    font-family:"Playfair Display",serif; font-size:clamp(1.8rem,3.2vw,2.3rem);
+    margin-bottom:14px
   }
   .lead{color:var(--muted)}
 
-  /* GLASS CARD */
+  /* GRID + CARDS */
+  .grid{ display:grid; gap:26px; align-items:start }
+  @media (min-width:920px){ .grid{grid-template-columns:1.15fr .85fr} }
   .card{
     background:linear-gradient(180deg, var(--card), #0f1320ee);
     border:1px solid #1f2530; border-radius:var(--radius); box-shadow:var(--shadow);
     padding:24px
   }
-
-  /* GRID LAYOUTS */
-  .grid{ display:grid; gap:26px; align-items:start }
-  @media (min-width:980px){ .grid-2{grid-template-columns:1.1fr 0.9fr} }
   .imgcard{
     position:relative; overflow:hidden;
     background:linear-gradient(180deg,#0d111b,#0f1320); border:1px solid #1f2530; border-radius:var(--radius); box-shadow:var(--shadow); padding:14px
@@ -153,92 +133,42 @@
   .imgcard img{width:100%; height:auto; border-radius:calc(var(--radius) - 8px); display:block; filter:saturate(1.05) contrast(1.02)}
   .imgcard::after{content:""; position:absolute; inset:6px; border-radius:calc(var(--radius) - 8px); pointer-events:none; box-shadow:inset 0 0 0 1px #ffffff10}
 
-  /* INPUT PANEL (User Details & Mode) */
-  .input-panel{ display:grid; gap:16px; grid-template-columns:1fr; }
-  @media (min-width:720px){ .input-panel{ grid-template-columns:repeat(2,1fr) } }
-  .field{ display:flex; flex-direction:column; gap:8px }
-  .label{ font-size:.9rem; color:#cbd3e6; font-weight:700; letter-spacing:.02em }
-  .input, .select, textarea{
+  /* SERVICES */
+  .services{display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:18px}
+  .service{
+    position:relative; overflow:hidden;
     background:linear-gradient(160deg,#121725,#0f1320);
-    border:1px solid #21293a; border-radius:14px; padding:12px 14px; color:var(--text);
-    outline:none; transition:.25s ease; box-shadow:inset 0 0 0 1px #00000033;
+    border:1px solid #21293a; border-radius:16px; padding:22px 20px;
+    transition:.35s ease; box-shadow:0 6px 18px rgba(0,0,0,.25)
   }
-  .input:focus, .select:focus, textarea:focus{ border-color:#2d3a57; box-shadow:0 6px 18px rgba(0,0,0,.25) }
-  .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
-  .hint{ font-size:.8rem; color:#9aa3af }
+  .service:hover{transform:translateY(-6px) rotateX(2deg); box-shadow:0 14px 28px rgba(0,0,0,.35); border-color:#2a3550}
+  .service .tag{
+    background:linear-gradient(135deg,var(--brand-2),var(--accent));
+    color:#0a0e14; font-weight:800; font-size:.8rem;
+    border-radius:999px; padding:.28rem .6rem; display:inline-block; margin-bottom:10px
+  }
+  .service h3{margin:.25rem 0 .5rem; font-size:1.05rem}
+  .service p{color:var(--muted); font-size:.95rem}
 
-  /* TABS */
-  .tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
-  .tab{ cursor:pointer }
-  .tab[aria-selected="true"]{ outline:2px solid #31406a }
+  /* ABOUT */
+  .about{ display:grid; gap:26px; align-items:center }
+  @media (min-width:920px){ .about{grid-template-columns:.9fr 1.1fr} }
+  .pill{ display:inline-block; padding:.4rem .7rem; border:1px solid #2a3350; border-radius:999px; color:#cbd3e6; font-size:.8rem; margin-bottom:10px }
 
-  /* TAROT AREA */
-  .tarot-wrap{ margin-top:14px }
-  .spread-opts{ display:flex; gap:10px; flex-wrap:wrap }
-  .tarot-table{ display:grid; gap:16px; margin-top:18px }
-  /* Celtic Cross layout */
-  .celtic{
-    display:grid; grid-template-columns:repeat(4, minmax(80px,1fr));
-    grid-auto-rows: 150px; gap:14px; justify-items:center;
-  }
-  @media (min-width:940px){ .celtic{ grid-template-columns:repeat(6, minmax(80px,1fr)); grid-auto-rows: 170px } }
-
-  /* TAROT CARD */
-  .tarot-card{
-    width:130px; height:210px; perspective:1000px; position:relative;
-  }
-  .tc-inner{
-    position:absolute; inset:0; transform-style:preserve-3d; transition:transform .9s cubic-bezier(.22,1,.36,1);
-  }
-  .tarot-card.flipped .tc-inner{ transform:rotateY(180deg) }
-  .tc-face{
-    position:absolute; inset:0; border-radius:14px; backface-visibility:hidden; overflow:hidden;
-    border:1px solid #2a3550; box-shadow:0 10px 24px rgba(0,0,0,.35);
-  }
-  .tc-back{ 
-    background:linear-gradient(135deg,#162034,#0f1326);
-    display:grid; place-items:center;
-  }
-  .tc-back::after{
-    content:"✵"; font-size:46px; color:#b7c0d6; opacity:.7; text-shadow:0 0 18px #9ab7ff66;
-  }
-  .tc-front{ transform:rotateY(180deg); position:relative }
-  .tc-art{
-    position:absolute; inset:0; 
-    background:
-      radial-gradient(180px 120px at 30% 25%, #ffd16622 0%, transparent 60%),
-      radial-gradient(180px 120px at 70% 75%, #e08cff22 0%, transparent 60%),
-      linear-gradient(180deg,#131a2a,#0f1320);
-  }
-  .tc-title{
-    position:absolute; left:0; right:0; bottom:0; padding:10px 10px 12px;
-    background:linear-gradient(180deg, #0000, #0008);
-    font-weight:800; text-align:center; font-size:.95rem; letter-spacing:.02em;
-  }
-  .tc-emoji{
-    position:absolute; top:10px; right:10px; font-size:20px; filter:drop-shadow(0 4px 10px #0009)
-  }
-
-  /* RESULTS CARDS */
-  .info-grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:14px }
-  .tile{ background:linear-gradient(160deg,#121725,#0f1320); border:1px solid #21293a; border-radius:16px; padding:18px; box-shadow:0 6px 18px rgba(0,0,0,.25) }
-  .tile h4{ margin-bottom:6px }
-  .muted{ color:var(--muted); font-size:.95rem }
-  .ok{ color:var(--ok) }
-  .warn{ color:var(--warn) }
-  .bad{ color:var(--bad) }
-
-  /* CONTACT / FOOTER */
+  /* CONTACT */
   .contact{ display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); margin-top:18px }
   .contact a{ text-decoration:none; color:var(--text) }
-  .contact .ctile{
+  .contact .tile{
     background:linear-gradient(160deg,#121725,#0f1320); border:1px solid #21293a;
     border-radius:16px; padding:18px; transition:.3s ease; box-shadow:0 6px 18px rgba(0,0,0,.25)
   }
-  .contact .ctile:hover{transform:translateY(-6px); border-color:#2a3550}
-  .k{opacity:.8; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.72rem; color:#b7c0d6}
-  .v{font-size:1.05rem; font-weight:700}
-  footer{margin:80px 0 30px; padding:26px 16px; text-align:center; color:#a9b3c9; border-top:1px solid #1f2530}
+  .contact .tile:hover{transform:translateY(-6px); border-color:#2a3550}
+  .contact .k{opacity:.8; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.72rem; color:#b7c0d6}
+  .contact .v{font-size:1.05rem; font-weight:700}
+
+  /* FOOTER */
+  footer{margin-top:70px; padding:26px 16px; text-align:center; color:#a9b3c9; border-top:1px solid #1f2530}
+  footer a{color:var(--brand); text-decoration:none}
 
   /* REVEAL ANIMS */
   [data-reveal]{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease}
@@ -247,8 +177,81 @@
 
   /* UTIL */
   .center{text-align:center}
-  .small{ font-size:.86rem }
-  .divider{ height:1px; background:linear-gradient(90deg, transparent, #2b3244, transparent); margin:14px 0 }
+
+  /* --- TAROT SECTION --- */
+  .tarot-wrap{ max-width:1100px; margin:90px auto; padding:0 20px }
+  .tarot-head{ display:grid; gap:18px; align-items:start }
+  @media(min-width:980px){ .tarot-head{ grid-template-columns:1.1fr .9fr } }
+  .tarot-panel{ background:linear-gradient(180deg, var(--card), #0f1320ee); border:1px solid #1f2530; border-radius:18px; box-shadow:var(--shadow); padding:22px }
+  .tarot-controls .field{ display:flex; gap:10px; margin:10px 0; align-items:center }
+  .tarot-controls input, .tarot-controls select, .tarot-controls textarea{
+    width:100%; background:#0f1320; border:1px solid #2a3350; color:var(--text); padding:12px 12px; border-radius:12px; outline:none;
+  }
+  .tarot-stage{
+    margin-top:20px; position:relative; min-height:320px; perspective:1200px;
+    overflow:visible;
+  }
+  .deck{ position:absolute; left:50%; top:40%; transform:translate(-50%, -50%); width:120px; height:180px }
+  .card3d{
+    width:120px; height:180px; position:absolute; left:50%; top:40%;
+    transform-style:preserve-3d; transform-origin:center center; cursor:pointer;
+  }
+  .flip{
+    transition: transform 0.9s cubic-bezier(.2,.7,.1,1);
+    transform-style:preserve-3d;
+  }
+  .face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:14px;
+    border:1px solid #2a3350; overflow:hidden;
+    box-shadow:0 16px 40px rgba(0,0,0,.36), inset 0 0 0 1px #ffffff12;
+  }
+  .front{
+    background:linear-gradient(160deg,#121725,#0f1320);
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:10px;
+  }
+  .front .title{ font-family:"Playfair Display",serif; font-size:1rem; line-height:1.2; }
+  .front .art{ font-size:40px; margin-bottom:6px; filter:drop-shadow(0 6px 16px #0006) }
+  .back{
+    transform:rotateY(180deg);
+    background:
+      radial-gradient(120% 120% at 20% 0%, #ffffff22 0%, #ffffff08 40%, transparent 70%),
+      repeating-conic-gradient(from 0deg, #1c2438 0 10deg, #151b2a 10deg 20deg);
+  }
+  .glow{
+    position:absolute; inset:-8px; border-radius:16px; pointer-events:none;
+    box-shadow:0 0 0 0 rgba(255,209,102,.0), 0 0 0 0 rgba(232,140,255,.0);
+    transition:.5s ease;
+  }
+  .card3d:hover .glow{
+    box-shadow:0 0 0 2px rgba(255,209,102,.25), 0 20px 60px rgba(232,140,255,.25);
+  }
+  .spread-area{ min-height:260px; position:relative; margin-top:16px }
+  .legend{ color:var(--muted); font-size:.9rem; margin-top:6px }
+
+  .insight{
+    margin-top:18px; background:linear-gradient(160deg,#121725,#0f1320);
+    border:1px solid #21293a; border-radius:16px; padding:16px; box-shadow:0 6px 18px rgba(0,0,0,.25)
+  }
+  .insight h4{ margin-bottom:6px }
+  .two-col{display:grid; gap:14px}
+  @media(min-width:720px){ .two-col{grid-template-columns:1fr 1fr} }
+
+  /* Tap/click waves */
+  .tap-ink{
+    position:absolute; pointer-events:none; border-radius:999px;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, #ffffff90 0%, #ffffff20 55%, transparent 70%);
+    width:0; height:0; opacity:.8; animation:ink .6s ease-out forwards;
+  }
+  @keyframes ink{ to{ width:220px; height:220px; opacity:0 } }
+
+  /* PRINT */
+  @media print{
+    .nav, .hero, .cta, .services, .imgcard, .contact, .tarot-stage, .legend, .btn, .ghost { display:none !important; }
+    body{background:#fff; color:#000}
+    .tarot-panel, .card{background:#fff; color:#000; border:1px solid #ddd; box-shadow:none}
+    a{color:#000}
+  }
 </style>
 </head>
 <body>
@@ -260,873 +263,279 @@
       <nav aria-label="Primary">
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#portal">Your Details</a></li>
-          <li><a href="#astrology">Astrology</a></li>
-          <li><a href="#numerology">Numerology</a></li>
+          <li><a href="#what">What is Tarot?</a></li>
           <li><a href="#tarot">Tarot</a></li>
-          <li><a href="#ai">AI Insights</a></li>
+          <li><a href="#cosmic-tools">Calculators</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-      <div class="right-controls">
-        <a class="pill-btn" href="#report">Download Report ⤓</a>
-      </div>
+      <a class="btn" href="#contact" aria-label="Book a Reading">Book a Reading ✨</a>
     </div>
   </header>
 
   <!-- HERO -->
   <section id="home" class="hero" aria-label="Welcome">
-    <div class="stars" aria-hidden="true"></div>
-    <div class="veil" aria-hidden="true"></div>
-    <div class="aura" aria-hidden="true"></div>
-    <canvas class="floating-cards" id="particles" aria-hidden="true"></canvas>
+    <div class="stars" aria-hidden="true"></div><div class="veil" aria-hidden="true"></div>
     <div class="content">
-      <div class="kicker">Guided by Tarot • Blessed by the Divine</div>
-      <h1 class="h1">Step onto the Divine Path</h1>
-      <p class="sub">Clarity for your present. Confidence for your next step. Experience a premium, immersive reading journey—Tarot, Numerology, and Astrology in one place. Offline or Online AI, your choice.</p>
-      <div class="cta">
-        <a class="btn" href="#portal">Start Your Journey ✨</a>
-        <a class="ghost" href="#tarot">Draw Tarot Now</a>
+      <div class="kicker">Guided by Tarot • Blessed by God</div>
+      <h1 class="h1">Welcome to the Divine Path</h1>
+      <p class="sub">“Life is full of mysteries, choices, and turning points. Tarot is not about predicting the future—it’s about seeking clarity, wisdom, and guidance from the Universe. Here, every card reveals a message meant for your Soul’s journey.”</p>
+      <div class="cta" style="display:flex;justify-content:center;flex-wrap:wrap;">
+        <a class="btn" href="#tarot">Start a Reading</a>
+        <a class="ghost" href="#services">Explore Services</a>
       </div>
     </div>
   </section>
 
-  <!-- USER PORTAL -->
-  <section id="portal" class="section grid grid-2">
+  <!-- WHAT IS TAROT -->
+  <section id="what" class="section grid">
     <div class="card" data-reveal>
-      <h2>Your Details</h2>
-      <p class="lead">We’ll use this to personalize Astrology, Numerology, Tarot interpretations and AI insights.</p>
-      <div class="divider"></div>
-
-      <div class="input-panel">
-        <div class="field">
-          <label class="label">Full Name</label>
-          <input id="name" class="input" placeholder="e.g., Poonam Sharma" />
-        </div>
-        <div class="field">
-          <label class="label">Date of Birth</label>
-          <input id="dob" type="date" class="input" />
-        </div>
-        <div class="field">
-          <label class="label">Time of Birth (optional)</label>
-          <input id="tob" type="time" class="input" />
-        </div>
-        <div class="field">
-          <label class="label">Place (City & Country)</label>
-          <input id="place" class="input" placeholder="e.g., Ranchi, India" />
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <h3 style="margin-bottom:8px">Mode & AI Options</h3>
-      <div class="row">
-        <button class="pill-btn" id="modeOffline" aria-pressed="true">Offline Mode</button>
-        <button class="pill-btn" id="modeOnline" aria-pressed="false">Online AI/API</button>
-        <span class="hint">You can switch anytime—offline works even without internet.</span>
-      </div>
-      <div id="apiPanel" class="tile" style="display:none; margin-top:12px">
-        <div class="field">
-          <label class="label">Free AI/API Base URL (optional)</label>
-          <input id="apiBase" class="input" placeholder="e.g., https://free-llm.example.com/generate" />
-        </div>
-        <div class="field">
-          <label class="label">API Key (optional)</label>
-          <input id="apiKey" class="input" placeholder="Paste key here (if required)" />
-        </div>
-        <div class="hint small">Tip: You can plug any free text-generation endpoint that accepts JSON {prompt: "..."} and returns {text: "..."}.</div>
-      </div>
-
-      <div class="row" style="margin-top:14px">
-        <button id="generateAll" class="btn">Generate My Reading 🔮</button>
-        <span class="hint">We’ll fill Astrology, Numerology & AI sections below.</span>
-      </div>
+      <h2>What is Tarot?</h2>
+      <p class="lead">Tarot is not about predicting the future — it is about understanding the present.</p>
+      <div style="height:10px"></div>
+      <p>Every card in the deck holds a deep symbolic meaning. Together, they create a mirror of your Soul’s journey, helping you uncover truths, hidden patterns, and the guidance you seek.</p>
+      <div style="height:12px"></div>
+      <p>Through Tarot, you can:</p>
+      <ul style="margin:10px 0 0 18px; line-height:1.9">
+        <li>Find clarity in confusion</li>
+        <li>Heal emotional wounds</li>
+        <li>Gain insight into love, career & life decisions</li>
+        <li>Reconnect with your higher self</li>
+      </ul>
+      <div style="height:12px"></div>
+      <p class="lead">Tarot is not magic — it is wisdom. It is the art of listening to the Universe through symbols, intuition, and divine energy.</p>
     </div>
 
     <div class="imgcard" data-reveal>
-      <img alt="Mystic tarot setup" src="https://images.unsplash.com/photo-1591291621163-3ac37f6d6a67?q=80&w=1400&auto=format&fit=crop" />
+      <img alt="Tarot reading on table" src="https://source.unsplash.com/1200x900/?tarot,reading,cards" />
     </div>
   </section>
 
-  <!-- ASTROLOGY -->
-  <section id="astrology" class="section">
-    <h2 data-reveal>Astrology (Offline Approx + Online API)</h2>
-    <p class="lead" data-reveal>Offline shows Sun sign and an <em>approximate</em> Vimshottari-style cycle from DOB. Online mode can fetch detailed planets/dasha (if your API supports it).</p>
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <h2 data-reveal>Tarot & Spiritual Services 🔥</h2>
+    <p class="lead" data-reveal>Choose the reading that resonates with your journey:</p>
 
-    <div class="info-grid" id="astroBasic" data-reveal>
-      <div class="tile"><h4>Sun Sign</h4><div class="muted" id="sunSign">—</div></div>
-      <div class="tile"><h4>Element</h4><div class="muted" id="sunElement">—</div></div>
-      <div class="tile"><h4>Personality</h4><div class="muted" id="sunPersonality">—</div></div>
-    </div>
-
-    <div class="card" style="margin-top:16px" data-reveal>
-      <div class="row" style="justify-content:space-between">
-        <h3>Vimshottari-style Dasha (Approx Offline)</h3>
-        <span class="hint">Educational—uses DOB to estimate a nakshatra index and cycles.</span>
+    <div class="services">
+      <div class="service" data-reveal>
+        <span class="tag">General Guidance</span>
+        <h3>Clarity on your current path</h3>
+        <p>Understand where you are and what the Universe is trying to show you.</p>
       </div>
-      <div id="dashaTable" class="info-grid"></div>
-      <div class="row" style="margin-top:12px">
-        <button id="fetchAstroApi" class="ghost">Try Online Astro API ↗</button>
-        <span class="hint">Requires API Base/Key above, if your endpoint supports planets/dasha.</span>
+
+      <div class="service" data-reveal>
+        <span class="tag">Love & Relationships</span>
+        <h3>Healing & deeper connection</h3>
+        <p>Insights for trust, communication and soulful compatibility.</p>
+      </div>
+
+      <div class="service" data-reveal>
+        <span class="tag">Career & Finance</span>
+        <h3>Purpose, progress & decisions</h3>
+        <p>Guidance for opportunities, risks and aligned choices.</p>
+      </div>
+
+      <div class="service" data-reveal>
+        <span class="tag">Future Insights</span>
+        <h3>Navigate upcoming energies</h3>
+        <p>See the patterns ahead so you can move with confidence.</p>
+      </div>
+
+      <div class="service" data-reveal>
+        <span class="tag">Custom Reading</span>
+        <h3>Personalized spread for your question</h3>
+        <p>Tailored guidance delivered with honesty, kindness and blessings.</p>
+      </div>
+    </div>
+
+    <div class="center" style="margin-top:22px" data-reveal>
+      <a class="btn" href="#tarot">Begin a Reading ✨</a>
+    </div>
+  </section>
+
+  <!-- TAROT INTERACTIVE -->
+  <section id="tarot" class="tarot-wrap">
+    <div class="tarot-head">
+      <div class="tarot-panel" data-reveal>
+        <span class="pill">Interactive Tarot</span>
+        <h2>Ask & Draw — Expressive Tarot</h2>
+        <p class="lead">Choose a spread, type your question, and feel the cards flip with life-like animation & sound.</p>
+
+        <div class="tarot-controls">
+          <div class="field">
+            <input id="qInput" placeholder="Type your question (e.g., 'Mera career growth 2025 me kaisa rahega?')" />
+          </div>
+          <div class="field">
+            <select id="spreadSelect" aria-label="Tarot Spread">
+              <option value="1">1-Card Insight</option>
+              <option value="3" selected>3-Card Past / Present / Future</option>
+              <option value="celtic">Celtic Cross (10)</option>
+              <option value="rel">Relationship (5)</option>
+              <option value="decision">Decision (A/B)</option>
+            </select>
+          </div>
+          <div class="field" style="gap:12px; flex-wrap:wrap">
+            <button class="btn" id="btnShuffle">Shuffle</button>
+            <button class="ghost" id="btnDraw">Draw Cards</button>
+            <button class="ghost" id="btnReset">Reset</button>
+          </div>
+          <div class="legend">Tip: Shuffle first (sound on 🔊), then Draw. Tap cards to flip for upright/reversed.</div>
+        </div>
+
+        <div class="tarot-stage">
+          <div id="deckArea" class="deck"></div>
+          <div id="spreadArea" class="spread-area"></div>
+        </div>
+
+        <div class="insight" id="readingOut">
+          <h4>Reading</h4>
+          <div class="mini">Your messages will appear here after drawing the cards.</div>
+        </div>
+      </div>
+
+      <div class="tarot-panel" data-reveal>
+        <span class="pill">Engine Mode</span>
+        <h2>Cosmic Engine Settings</h2>
+        <p class="sub">Online AI + Astrology API vs Offline Engine. Online se context-based interpretations milti hain; Offline 100% local aur instant.</p>
+        <div class="pill-tab" id="modeTabs" role="tablist" aria-label="Engine Mode" style="display:flex;gap:10px;flex-wrap:wrap;margin:.7rem 0 0">
+          <div class="chip active" data-mode="offline" role="tab" aria-selected="true">Offline (Local)</div>
+          <div class="chip" data-mode="online" role="tab" aria-selected="false">Online (Free API)</div>
+        </div>
+
+        <div class="result-card" style="margin-top:12px">
+          <h4>Online API (optional)</h4>
+          <div class="field"><input id="apiBase" placeholder="Free AI Endpoint (optional)"></div>
+          <div class="field"><input id="apiKey" placeholder="API Key (optional)"></div>
+          <p class="mini">If blank, everything works offline. CORS policy depends on your browser/server.</p>
+        </div>
+
+        <div class="result-card" style="margin-top:12px">
+          <h4>Report</h4>
+          <label class="field"><input id="incTarot" type="checkbox" checked> Include Tarot Spread & meanings</label>
+          <label class="field"><input id="incNumerology" type="checkbox" checked> Include Numerology</label>
+          <label class="field"><input id="incAstro" type="checkbox" checked> Include Astrology & Dasha</label>
+          <div class="field"><button class="btn" id="btnPrint">Save as PDF/Print</button></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- NUMEROLOGY -->
-  <section id="numerology" class="section">
-    <h2 data-reveal>Numerology Suite</h2>
-    <p class="lead" data-reveal>Comprehensive calculations with expressive meanings. Click a tile for details.</p>
-
-    <div id="numGrid" class="info-grid" data-reveal></div>
-  </section>
-
-  <!-- TAROT -->
-  <section id="tarot" class="section">
-    <h2 data-reveal>Tarot Readings</h2>
-    <p class="lead" data-reveal>Ask your question, choose a spread, and flip the cards. Expressive, question-aware meanings.</p>
+  <!-- CALCULATORS / REMEDIES / DASHA -->
+  <section id="cosmic-tools" class="section">
+    <div class="card" data-reveal>
+      <span class="pill">Numerology Suite</span>
+      <h2>Numerology Calculators (Complete)</h2>
+      <p class="lead">Life Path, Expression/Destiny, Soul Urge, Personality, Maturity, Pinnacles & Challenges, Lo Shu Grid, Karmic Debts.</p>
+      <div class="grid" style="gap:22px">
+        <div>
+          <div class="field"><input id="numName" placeholder="Full Name (as per official)"></div>
+          <div class="field"><input id="numDOB" type="date"></div>
+          <div class="field"><button class="btn" id="calcNumerology">Calculate Numerology</button></div>
+        </div>
+        <div id="numOut">
+          <div class="result-card"><h4>Ready</h4><p class="mini">Enter details and click Calculate.</p></div>
+        </div>
+      </div>
+    </div>
 
     <div class="card" data-reveal>
-      <div class="input-panel" style="grid-template-columns:1fr 1fr 1fr">
-        <div class="field">
-          <label class="label">Your Question / Intent</label>
-          <input id="question" class="input" placeholder="e.g., What should I focus on in my career this year?" />
+      <span class="pill">Astrology</span>
+      <h2>Astrology (Sun Sign + Basics)</h2>
+      <p class="lead">Offline: Sun sign + traits + lucky colors/gems. Online mode me birth data se extended insights try honge.</p>
+      <div class="grid" style="gap:22px">
+        <div>
+          <div class="field"><input id="astroDOB" type="date" placeholder="Birth Date"></div>
+          <div class="field"><input id="astroTime" type="time" placeholder="Birth Time (optional)"></div>
+          <div class="field"><input id="astroCity" placeholder="Birth City (optional)"></div>
+          <div class="field"><button class="btn" id="calcAstro">Generate Basics</button></div>
         </div>
-        <div class="field">
-          <label class="label">Spread</label>
-          <select id="spread" class="select">
-            <option value="single">Single Card</option>
-            <option value="three">3-Card (Past • Present • Future)</option>
-            <option value="celtic">Celtic Cross (10)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="label">Deck Mode</label>
-          <select id="deckMode" class="select">
-            <option value="upright">Upright only</option>
-            <option value="mixed">Mixed (Upright/Reversed)</option>
-          </select>
+        <div id="astroOut">
+          <div class="result-card"><h4>Sun Sign</h4><p class="mini">Fill your birth date then Generate.</p></div>
         </div>
       </div>
+    </div>
 
-      <div class="row" style="margin-top:12px">
-        <button id="drawCards" class="btn">Draw Cards ✨</button>
-        <button id="clearCards" class="ghost">Clear</button>
+    <div class="card" data-reveal>
+      <span class="pill">Vimshottari-style Dasha (Offline)</span>
+      <h2>Mahadasha Schedule (Custom Start)</h2>
+      <p class="lead">Accurate Vimshottari start ke liye Moon Nakshatra chahiye (online API try karega). Offline me aap start lord choose karke schedule bana sakte ho.</p>
+      <div class="grid" style="gap:22px">
+        <div>
+          <div class="field">
+            <select id="startDasha">
+              <option value="">Select Start Lord (offline)</option>
+              <option>Sun</option><option>Moon</option><option>Mars</option>
+              <option>Rahu</option><option>Jupiter</option><option>Saturn</option>
+              <option>Mercury</option><option>Ketu</option><option>Venus</option>
+            </select>
+          </div>
+          <div class="field"><input id="dashaStart" type="date"></div>
+          <div class="field" style="gap:12px;flex-wrap:wrap">
+            <button class="btn" id="buildDasha">Build Schedule</button>
+            <button class="ghost" id="tryOnlineDasha">Auto (Online)</button>
+          </div>
+        </div>
+        <div id="dashaOut">
+          <div class="result-card"><h4>Schedule</h4><p class="mini">Select start lord and date, then Build.</p></div>
+        </div>
       </div>
+    </div>
 
-      <div id="tarotBoard" class="tarot-wrap">
-        <!-- Cards injected here -->
+    <div class="card" data-reveal>
+      <span class="pill">Remedies & Guidance</span>
+      <h2>Colors • Gemstones • Tips • Affirmations</h2>
+      <div class="grid" style="gap:22px">
+        <div class="result-card"><h4>Colors</h4><div id="remedyColors" class="mini">Run Astrology/Numerology first.</div></div>
+        <div class="result-card"><h4>Gemstone</h4><div id="remedyGems" class="mini">Run Astrology/Numerology first.</div></div>
+        <div class="result-card"><h4>Daily Tips</h4><div id="remedyTips" class="mini">Run Astrology/Numerology first.</div></div>
+        <div class="result-card"><h4>Affirmation</h4><div id="remedyAff" class="mini">Run Astrology/Numerology first.</div></div>
       </div>
-
-      <div id="tarotInterpretation" class="tile" style="margin-top:16px; display:none"></div>
     </div>
   </section>
 
-  <!-- AI INSIGHTS -->
-  <section id="ai" class="section">
-    <h2 data-reveal>AI Life Predictions</h2>
-    <p class="lead" data-reveal>Offline rules + optional Online AI for richer, story-like guidance based on your name, DOB, numerology & tarot context.</p>
-
+  <!-- ABOUT -->
+  <section id="about" class="section about">
+    <div class="imgcard" data-reveal>
+      <img alt="Tarot reader with cards" src="https://source.unsplash.com/1200x900/?tarot,oracle,deck" />
+    </div>
     <div class="card" data-reveal>
-      <div class="row">
-        <button id="genAiOffline" class="btn">Generate Offline Insight</button>
-        <button id="genAiOnline" class="ghost">Generate via Online AI</button>
-      </div>
-      <div id="aiOutput" class="tile" style="margin-top:12px; white-space:pre-wrap"></div>
+      <span class="pill">About Me</span>
+      <h2>Hi, I’m Poonam (Poornika)</h2>
+      <p class="lead">I’m a Tarot reader and spiritual guide. For me, Tarot is not just a deck of cards — it’s a mirror of our soul. Each card reflects hidden truths, energies and opportunities we often overlook.</p>
+      <div style="height:12px"></div>
+      <p>My purpose is simple: to help you find clarity in times of confusion, peace in times of chaos, and hope in times of doubt. Every reading is done with respect, compassion and divine intention.</p>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
     <h2 data-reveal>Let’s Connect ✨</h2>
-    <p class="lead" data-reveal>Book your session — guidance through Tarot, blessings through the Divine.</p>
+    <p class="lead" data-reveal>Your answers are waiting to be revealed. Book your Tarot session today.</p>
 
-    <div class="contact" data-reveal>
-      <a href="mailto:divinepath743@gmail.com" class="ctile">
+    <div class="contact">
+      <a href="mailto:divinepath743@gmail.com" class="tile" data-reveal>
         <div class="k">Email</div>
         <div class="v">divinepath743@gmail.com</div>
       </a>
-      <a href="https://wa.me/919835230370" target="_blank" rel="noopener" class="ctile">
+      <a href="https://wa.me/919835230370" target="_blank" rel="noopener" class="tile" data-reveal>
         <div class="k">WhatsApp</div>
         <div class="v">+91 9835230370</div>
       </a>
-      <a href="https://instagram.com/punamtarotcardreader" target="_blank" rel="noopener" class="ctile">
-        <div class="k">Instagram</div>
+      <a href="https://instagram.com/punamtarotcardreader" target="_blank" rel="noopener" class="tile" data-reveal>
+        <div class="k">Social</div>
         <div class="v">@punamtarotcardreader</div>
       </a>
     </div>
 
-    <div class="center" style="margin-top:22px" data-reveal id="report">
-      <button id="downloadPdf" class="btn">Download Full Report (PDF) ⤓</button>
+    <div class="center" style="margin-top:22px" data-reveal>
+      <a class="ghost" href="#home">Back to top ↑</a>
     </div>
   </section>
 
   <footer>
-    Divine Path • Tarot • Numerology • Astrology — © 2025 Poonam / Poornika • All Rights Reserved • Built with ❤️
+    Guidance through Tarot, Blessings through the Divine • © 2025 Poonam/Poornika — All Rights Reserved • Built with ❤️
   </footer>
 
-<script>
-/* ---------------------------
-   SCROLL REVEAL & PARALLAX
-----------------------------*/
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-  })
-},{threshold:.14});
-document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
-
-const stars = document.querySelector('.hero .stars');
-window.addEventListener('mousemove', (e)=>{
-  const x = (e.clientX / window.innerWidth - .5) * 8;
-  const y = (e.clientY / window.innerHeight - .5) * 8;
-  stars.style.transform = `scale(1.06) translate(${x}px, ${y}px)`;
-});
-
-/* Floating particles aura (canvas, super light) */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-function resizeCanvas(){ canvas.width = innerWidth; canvas.height = Math.max(400, innerHeight*0.8); }
-let particles = [];
-function initParticles(){
-  particles = Array.from({length: 36}, _ => ({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*2 + 1,
-    s: Math.random()*0.6 + 0.2,
-    a: Math.random()*Math.PI*2
-  }));
-}
-function tickParticles(){
-  ctx.clearRect(0,0,canvas.width, canvas.height);
-  particles.forEach(p=>{
-    p.a += 0.002 + p.s*0.002;
-    p.x += Math.cos(p.a)*p.s;
-    p.y += Math.sin(p.a)*p.s*0.7;
-    if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
-    if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
-    const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*5);
-    g.addColorStop(0,'#e08cff22'); g.addColorStop(0.6,'#8ec5ff22'); g.addColorStop(1,'#0000');
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*5,0,Math.PI*2); ctx.fill();
-  });
-  requestAnimationFrame(tickParticles);
-}
-resizeCanvas(); initParticles(); tickParticles();
-addEventListener('resize', ()=>{ resizeCanvas(); initParticles(); });
-
-/* ---------------------------
-   MODE TOGGLE (Offline/Online)
-----------------------------*/
-const modeOfflineBtn = document.getElementById('modeOffline');
-const modeOnlineBtn = document.getElementById('modeOnline');
-const apiPanel = document.getElementById('apiPanel');
-let ONLINE = false;
-
-function setMode(online){
-  ONLINE = !!online;
-  modeOfflineBtn.setAttribute('aria-pressed', (!ONLINE).toString());
-  modeOnlineBtn.setAttribute('aria-pressed', (ONLINE).toString());
-  apiPanel.style.display = ONLINE ? 'block' : 'none';
-}
-modeOfflineBtn.addEventListener('click', ()=>setMode(false));
-modeOnlineBtn.addEventListener('click', ()=>setMode(true));
-
-/* ---------------------------
-   HELPERS
-----------------------------*/
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-function digitsOnly(str){ return (str||'').toUpperCase().replace(/[^A-Z]/g,''); }
-function onlyNums(str){ return (str||'').replace(/\D/g,''); }
-function sumDigits(n){ return (''+n).split('').reduce((a,b)=>a+(+b||0),0); }
-function reduceMaster(n){
-  while(n>9 && ![11,22,33].includes(n)){ n = sumDigits(n); }
-  return n;
-}
-function dayOfYear(d){
-  const start = new Date(d.getFullYear(),0,0);
-  const diff = d - start;
-  return Math.floor(diff/86400000);
-}
-function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
-
-/* ---------------------------
-   ASTROLOGY (Offline Approx)
-----------------------------*/
-const SUN_SIGNS = [
-  {name:'Aries',    start:'03-21', end:'04-19', el:'Fire',  vibe:'Bold, initiating, courageous.'},
-  {name:'Taurus',   start:'04-20', end:'05-20', el:'Earth', vibe:'Patient, grounded, sensual.'},
-  {name:'Gemini',   start:'05-21', end:'06-20', el:'Air',   vibe:'Curious, witty, adaptable.'},
-  {name:'Cancer',   start:'06-21', end:'07-22', el:'Water', vibe:'Nurturing, protective, intuitive.'},
-  {name:'Leo',      start:'07-23', end:'08-22', el:'Fire',  vibe:'Radiant, creative, confident.'},
-  {name:'Virgo',    start:'08-23', end:'09-22', el:'Earth', vibe:'Practical, detail-oriented, humble.'},
-  {name:'Libra',    start:'09-23', end:'10-22', el:'Air',   vibe:'Harmonious, fair, relationship-focused.'},
-  {name:'Scorpio',  start:'10-23', end:'11-21', el:'Water', vibe:'Deep, magnetic, transformative.'},
-  {name:'Sagittarius',start:'11-22', end:'12-21', el:'Fire',vibe:'Adventurous, wise, expansive.'},
-  {name:'Capricorn',start:'12-22', end:'01-19', el:'Earth', vibe:'Ambitious, disciplined, strategic.'},
-  {name:'Aquarius', start:'01-20', end:'02-18', el:'Air',   vibe:'Innovative, humanitarian, unique.'},
-  {name:'Pisces',   start:'02-19', end:'03-20', el:'Water', vibe:'Empathic, dreamy, spiritual.'},
-];
-function getSunSign(d){
-  if(!d || isNaN(+d)) return null;
-  const y = d.getFullYear();
-  const mmdd = (m,d)=>`${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-  for(const s of SUN_SIGNS){
-    const [sm,sd]=s.start.split('-').map(Number);
-    const [em,ed]=s.end.split('-').map(Number);
-    const start = new Date((sm<=em?y:y-1), sm-1, sd);
-    const end   = new Date((sm<=em?y:y+1), em-1, ed);
-    if(d>=start && d<=end) return s;
-  }
-  return null;
-}
-
-/* Approx Dasha (educational): map dayOfYear to a 27-nakshatra index, then cycle through Vimshottari order */
-const D_MAHA = { Ketu:7, Venus:20, Sun:6, Moon:10, Mars:7, Rahu:18, Jupiter:16, Saturn:19, Mercury:17 }; // years
-const D_ORDER = ["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"];
-function approxDasha(dob){
-  const d = new Date(dob); if(isNaN(+d)) return [];
-  const doy = dayOfYear(d);
-  const nakIndex = doy % 27;
-  // Map nak index to starting lord (each 3 nak = next lord)
-  const lordIndex = Math.floor(nakIndex/3)%9; // 0..8 -> D_ORDER
-  // Progress within first mahadasha based on fractional nakshatra position
-  const frac = (nakIndex%3)/3; // 0..1
-  let out = [];
-  let year = d.getFullYear();
-  let month = d.getMonth();
-  let day = d.getDate();
-  function addYears(y){ year += Math.floor(y); const extra = (y-Math.floor(y))*365; const dt = new Date(year,month,day); dt.setDate(dt.getDate()+Math.round(extra)); year = dt.getFullYear(); month = dt.getMonth(); day = dt.getDate(); }
-  // First remaining portion:
-  let lord = D_ORDER[lordIndex];
-  let remYears = D_MAHA[lord] * (1-frac);
-  out.push({lord, start:new Date(d), years: +(remYears.toFixed(2))});
-  // Next mahadashas:
-  let i = lordIndex+1;
-  for(let k=0;k<8;k++){
-    lord = D_ORDER[i%9];
-    out.push({lord, years:D_MAHA[lord]});
-    i++;
-  }
-  // Compute start dates chaining:
-  let cursor = new Date(d);
-  out = out.map((row,idx)=>{
-    const s = new Date(cursor);
-    const end = new Date(s); end.setFullYear(end.getFullYear()+Math.floor(row.years));
-    end.setMonth(end.getMonth()+Math.round((row.years - Math.floor(row.years))*12));
-    // Advance cursor:
-    cursor = new Date(end);
-    return { ...row, start:s, end };
-  });
-  return out;
-}
-
-/* ---------------------------
-   NUMEROLOGY
-----------------------------*/
-const PythagMap = Object.fromEntries("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((ch,i)=>[ch, (i%9)+1]));
-function nameNumbers(fullname){
-  const letters = digitsOnly(fullname).split('');
-  const vowels = new Set(['A','E','I','O','U','Y']); // (Y counted as vowel for many systems)
-  let total=0, vowel=0, cons=0;
-  letters.forEach(ch=>{
-    const v = PythagMap[ch]||0; total += v;
-    if(vowels.has(ch)) vowel += v; else cons += v;
-  });
-  return { total, vowel, cons };
-}
-function lifePath(d){
-  const ds = onlyNums(d); return reduceMaster(ds.split('').reduce((a,b)=>a+(+b),0));
-}
-function destinyExpression(fullname){
-  return reduceMaster(nameNumbers(fullname).total);
-}
-function soulUrge(fullname){
-  return reduceMaster(nameNumbers(fullname).vowel);
-}
-function personalityNumber(fullname){
-  return reduceMaster(nameNumbers(fullname).cons);
-}
-function maturityNumber(lifePathNum, destinyNum){
-  return reduceMaster(lifePathNum + destinyNum);
-}
-function birthdayNumber(dob){
-  const d = new Date(dob); if(isNaN(+d)) return null;
-  return reduceMaster(d.getDate());
-}
-function karmicDebts(dob, fullname){
-  const nums = [];
-  const nameVal = nameNumbers(fullname).total;
-  const lifepath = lifePath(dob);
-  const key = (n)=>[13,14,16,19].includes(n);
-  // Check presence in raw sums
-  ;[13,14,16,19].forEach(k=>{ if((''+nameVal).includes(''+k) || (''+lifepath).includes(''+k)) nums.push(k); });
-  return Array.from(new Set(nums));
-}
-function balanceNumber(fullname){
-  // first name initial -> number (coping style)
-  const first = (fullname||'').trim().split(/\s+/)[0]||'';
-  if(!first) return null;
-  return reduceMaster(PythagMap[first[0].toUpperCase()] || 0);
-}
-function challenges(dob){
-  const d = new Date(dob); if(isNaN(+d)) return [];
-  const m = d.getMonth()+1, day = d.getDate(), y = d.getFullYear()%100;
-  const c1 = Math.abs(reduceMaster(m) - reduceMaster(day));
-  const c2 = Math.abs(reduceMaster(day) - reduceMaster(y));
-  const c3 = Math.abs(reduceMaster(c1) - reduceMaster(c2));
-  const c4 = Math.abs(reduceMaster(m) - reduceMaster(y));
-  return [c1||0,c2||0,c3||0,c4||0];
-}
-function pinnaclesAndCycles(dob){
-  const d = new Date(dob); if(isNaN(+d)) return null;
-  const m = reduceMaster(d.getMonth()+1), day = reduceMaster(d.getDate()), y = reduceMaster(d.getFullYear());
-  const p1 = reduceMaster(m + day);
-  const p2 = reduceMaster(day + y);
-  const p3 = reduceMaster(p1 + p2);
-  const p4 = reduceMaster(m + y);
-  return {p1,p2,p3,p4};
-}
-
-/* ---------------------------
-   TAROT DECK (compact + expressive)
-----------------------------*/
-const MAJORS = [
-  ["The Fool","New beginnings, trust, leap of faith","🎒"],["The Magician","Manifestation, skill, willpower","🪄"],
-  ["The High Priestess","Intuition, inner voice, mystery","🌙"],["The Empress","Fertility, creation, nurturing","🌿"],
-  ["The Emperor","Structure, leadership, stability","🛡️"],["The Hierophant","Tradition, values, guidance","⛩️"],
-  ["The Lovers","Choice, union, alignment","💞"],["The Chariot","Drive, victory, control","🛞"],
-  ["Strength","Courage, gentle power, heart","🦁"],["The Hermit","Search, wisdom, solitude","🏔️"],
-  ["Wheel of Fortune","Cycles, fate, turning point","🎡"],["Justice","Truth, fairness, law","⚖️"],
-  ["The Hanged Man","Perspective, surrender, pause","🔄"],["Death","Transformation, endings, rebirth","🦋"],
-  ["Temperance","Balance, healing, flow","🏺"],["The Devil","Attachment, shadow, temptation","⛓️"],
-  ["The Tower","Sudden change, revelation","⚡"],["The Star","Hope, guidance, renewal","⭐"],
-  ["The Moon","Uncertainty, dreams, psyche","🌕"],["The Sun","Joy, vitality, success","🌞"],
-  ["Judgement","Awakening, calling, review","🎺"],["The World","Completion, mastery, journey","🌍"]
-];
-const SUITS = ["Wands","Cups","Swords","Pentacles"];
-const RANKS = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Page","Knight","Queen","King"];
-function buildDeck(){
-  const deck=[];
-  MAJORS.forEach((m,i)=> deck.push({name:m[0], major:true, idx:i, upright:m[1], reversed:"Blocked "+m[1].toLowerCase(), emoji:m[2]}));
-  SUITS.forEach(s=>{
-    RANKS.forEach((r,ri)=>{
-      const name = `${r} of ${s}`;
-      const base = {
-        Wands:"passion, creativity, action",
-        Cups:"feelings, relationships, intuition",
-        Swords:"thoughts, truth, decisions",
-        Pentacles:"work, body, money"
-      }[s];
-      const nuance = {
-        Ace:"pure potential",
-        Two:"choices & balance",
-        Three:"growth & teamwork",
-        Four:"stability / re-evaluation",
-        Five:"conflict or change",
-        Six:"harmony & support",
-        Seven:"assessment & faith",
-        Eight:"movement & mastery",
-        Nine:"fruition & resilience",
-        Ten:"culmination",
-        Page:"curiosity & messages",
-        Knight:"momentum & quest",
-        Queen:"maturity & care",
-        King:"leadership & mastery"
-      }[r];
-      const em = {Wands:"🔥",Cups:"💧",Swords:"⚔️",Pentacles:"🪙"}[s];
-      deck.push({name, major:false, suit:s, rank:r, upright:`${r} of ${s}: ${nuance} in ${base}.`, reversed:`${r} of ${s} (Reversed): delays/blocks around ${base}.`, emoji:em});
-    });
-  });
-  return deck;
-}
-const FULL_DECK = buildDeck();
-
-/* Interpret tarot with question context */
-function tarotInterpretation(cards, question, mode){
-  const tone = question?.toLowerCase().includes('love') || question?.toLowerCase().includes('relationship') ? 'love'
-            : question?.toLowerCase().includes('career') || question?.toLowerCase().includes('job') ? 'career'
-            : question?.toLowerCase().includes('money') || question?.toLowerCase().includes('finance') ? 'money'
-            : 'general';
-  let lines = [];
-  cards.forEach((c,i)=>{
-    const pos = cards.length===1 ? 'Insight'
-              : cards.length===3 ? (['Past','Present','Future'][i])
-              : `Card ${i+1}`;
-    const key = c.reversedFlag ? c.reversed : c.upright;
-    const tip = (()=>{
-      if(tone==='love'){
-        if(c.name.includes('Cups')||c.name==='The Lovers') return 'Matters of the heart are highlighted—honest conversation heals.';
-      }
-      if(tone==='career'){
-        if(c.name.includes('Pentacles')||c.name==='The Magician'||c.name==='The Chariot') return 'Focus + consistent action moves the needle at work.';
-      }
-      if(tone==='money'){
-        if(c.name.includes('Pentacles')||c.name==='The Emperor') return 'Grounded planning and budgeting support stability.';
-      }
-      return 'Listen to the subtle nudge—your intuition already knows.';
-    })();
-    lines.push(`• ${pos}: ${key}  \n   Tip: ${tip}`);
-  });
-  const sum = (()=>{
-    if(cards.some(c=>c.name==='The Tower')) return "A reset is arriving—release rigidity and welcome the breakthrough.";
-    if(cards.some(c=>c.name==='The Sun')) return "Joyful momentum—say yes to growth, visibility and warmth.";
-    if(cards.some(c=>c.name==='The Moon')) return "Move gently. Clarity unfolds as you slow down and reflect.";
-    if(cards.some(c=>c.name==='The Star')) return "Hope is your compass—nourish it and keep going.";
-    return "The path is opening as you act with honesty and steady faith.";
-  })();
-  return `Question: ${question||'—'}\n\n${lines.join('\n')}\n\nSummary: ${sum}`;
-}
-
-/* ---------------------------
-   RENDER HELPERS
-----------------------------*/
-function fmtDate(d){
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function mountDasha(rows){
-  const host = document.getElementById('dashaTable');
-  host.innerHTML='';
-  rows.slice(0,9).forEach(r=>{
-    const tile = document.createElement('div');
-    tile.className='tile';
-    tile.innerHTML = `<h4>${r.lord}</h4>
-      <div class="muted small">${fmtDate(r.start)} → ${fmtDate(r.end)}</div>
-      <div class="small">Years: <b>${r.years}</b></div>`;
-    host.appendChild(tile);
-  });
-}
-function showAstroBasics(sun){
-  document.getElementById('sunSign').textContent = sun?.name||'—';
-  document.getElementById('sunElement').textContent = sun?.el||'—';
-  document.getElementById('sunPersonality').textContent = sun?.vibe||'—';
-}
-function mountNumerology(data){
-  const host = document.getElementById('numGrid');
-  host.innerHTML='';
-  const items = [
-    ['Life Path', data.lifePath, 'Your core road and lessons.'],
-    ['Destiny / Expression', data.destiny, 'Talents & how you express your gifts.'],
-    ['Soul Urge', data.soul, 'Heart’s desire and inner pull.'],
-    ['Personality', data.personality, 'What the world first notices.'],
-    ['Maturity', data.maturity, 'What you grow into over time.'],
-    ['Birthday', data.birthday, 'Natural talent from your birth date.'],
-    ['Balance', data.balance ?? '—', 'Coping style when under stress.'],
-  ];
-  items.forEach(([k,v,desc])=>{
-    const tile = document.createElement('div');
-    tile.className='tile'; tile.tabIndex=0; tile.role='button';
-    tile.innerHTML = `<h4>${k}</h4><div class="muted">Number: <b>${v}</b></div><div class="small">${desc}</div>`;
-    tile.addEventListener('click',()=>{
-      alert(`${k} — ${v}\n\n${desc}\n\n(Meanings adapt in AI section too.)`);
-    });
-    host.appendChild(tile);
-  });
-
-  const kd = (data.karmicDebts.length? data.karmicDebts.join(', ') : 'None');
-  const ch = data.challenges.join(' • ');
-  const pc = data.pinnacles;
-  const extra = document.createElement('div');
-  extra.className='tile';
-  extra.innerHTML = `<h4>Extras</h4>
-    <div class="muted small">Karmic Debts: <b>${kd}</b></div>
-    <div class="muted small">Challenges: <b>${ch}</b></div>
-    <div class="muted small">Pinnacles: <b>${pc.p1}, ${pc.p2}, ${pc.p3}, ${pc.p4}</b></div>`;
-  host.appendChild(extra);
-}
-
-/* ---------------------------
-   GENERATE ALL (from user)
-----------------------------*/
-document.getElementById('generateAll').addEventListener('click', ()=>{
-  const name = document.getElementById('name').value.trim();
-  const dob = document.getElementById('dob').value;
-  if(!dob){ alert('Please enter your Date of Birth.'); return; }
-
-  // Astrology
-  const sun = getSunSign(new Date(dob));
-  showAstroBasics(sun);
-  mountDasha(approxDasha(dob));
-
-  // Numerology
-  const life = lifePath(dob);
-  const dest = destinyExpression(name);
-  const soul = soulUrge(name);
-  const pers = personalityNumber(name);
-  const matur = maturityNumber(life, dest);
-  const bday = birthdayNumber(dob);
-  const kd = karmicDebts(dob, name);
-  const bal = balanceNumber(name);
-  const chal = challenges(dob);
-  const pc = pinnaclesAndCycles(dob);
-  mountNumerology({
-    lifePath: life, destiny: dest, soul: soul, personality: pers, maturity: matur,
-    birthday: bday, karmicDebts: kd, balance: bal, challenges: chal, pinnacles: pc
-  });
-
-  // Fancy reveal
-  gsap.from('#astroBasic .tile',{opacity:0,y:12,stagger:.06,duration:.6,ease:'power2.out'});
-  gsap.from('#dashaTable .tile',{opacity:0,y:12,stagger:.05,duration:.6,ease:'power2.out'});
-  gsap.from('#numGrid .tile',{opacity:0,scale:.96,stagger:.05,duration:.5,ease:'power2.out'});
-});
-
-/* ---------------------------
-   TAROT DRAW & ANIMATIONS
-----------------------------*/
-function drawFromDeck(n, mixed){
-  const pool = [...FULL_DECK];
-  const out=[];
-  for(let i=0;i<n;i++){
-    const idx = Math.floor(Math.random()*pool.length);
-    const card = pool.splice(idx,1)[0];
-    const reversedFlag = mixed ? Math.random()<0.48 : false;
-    out.push({...card, reversedFlag});
-  }
-  return out;
-}
-function renderSingle(cards){
-  const board = document.getElementById('tarotBoard');
-  board.innerHTML='';
-  const grid = document.createElement('div');
-  grid.className='tarot-table';
-  const row = document.createElement('div');
-  row.style.display='flex'; row.style.gap='16px';
-  cards.forEach(c=> row.appendChild(makeTarotCard(c)));
-  grid.appendChild(row);
-  board.appendChild(grid);
-}
-function renderThree(cards){
-  const board = document.getElementById('tarotBoard');
-  board.innerHTML='';
-  const row = document.createElement('div');
-  row.style.display='flex'; row.style.gap='18px'; row.style.flexWrap='wrap';
-  ['Past','Present','Future'].forEach((label,i)=>{
-    const wrap = document.createElement('div');
-    wrap.style.display='grid'; wrap.style.justifyItems='center'; wrap.style.gap='8px';
-    wrap.appendChild(makeTarotCard(cards[i]));
-    const cap = document.createElement('div'); cap.className='small muted'; cap.textContent=label;
-    wrap.appendChild(cap);
-    row.appendChild(wrap);
-  });
-  board.appendChild(row);
-}
-function renderCeltic(cards){
-  const board = document.getElementById('tarotBoard');
-  board.innerHTML='';
-  const grid = document.createElement('div'); grid.className='celtic';
-  // Celtic Cross placement 10 cards
-  const map = [
-    [2,2],[2,2], [3,2], [1,2], [2,1], [2,3], [4,1], [4,2], [4,3], [4,4]
-  ];
-  cards.forEach((c,i)=>{
-    const cell = document.createElement('div'); cell.style.display='grid'; cell.style.placeItems='center';
-    cell.style.gridColumn = map[i][0]; cell.style.gridRow = map[i][1];
-    cell.appendChild(makeTarotCard(c, i===1 ? 90 : 0)); // card 2 crosses card 1
-    grid.appendChild(cell);
-  });
-  board.appendChild(grid);
-}
-function makeTarotCard(card, rotate=0){
-  const wrap = document.createElement('div');
-  wrap.className='tarot-card'; if(rotate) wrap.style.transform=`rotate(${rotate}deg)`;
-  const inner = document.createElement('div'); inner.className='tc-inner';
-  const back = document.createElement('div'); back.className='tc-face tc-back';
-  const front = document.createElement('div'); front.className='tc-face tc-front';
-
-  const art = document.createElement('div'); art.className='tc-art';
-  const emoji = document.createElement('div'); emoji.className='tc-emoji'; emoji.textContent = card.emoji||'✦';
-  const title = document.createElement('div'); title.className='tc-title';
-  title.innerHTML = `${card.name}${card.reversedFlag ? ' — Reversed' : ''}`;
-
-  front.appendChild(art); front.appendChild(emoji); front.appendChild(title);
-  inner.appendChild(back); inner.appendChild(front);
-  wrap.appendChild(inner);
-
-  // Flip interaction
-  wrap.addEventListener('click', ()=> wrap.classList.toggle('flipped'));
-  // Entry animation
-  gsap.from(wrap,{y:18,opacity:0,rotate:rotate?rotate-8:0,duration:.7,ease:'power2.out'});
-
-  return wrap;
-}
-document.getElementById('drawCards').addEventListener('click', ()=>{
-  const spread = document.getElementById('spread').value;
-  const mode = document.getElementById('deckMode').value;
-  const q = document.getElementById('question').value.trim();
-  const mixed = (mode==='mixed');
-
-  const n = spread==='single' ? 1 : spread==='three' ? 3 : 10;
-  const cards = drawFromDeck(n, mixed);
-  if(spread==='single') renderSingle(cards);
-  else if(spread==='three') renderThree(cards);
-  else renderCeltic(cards);
-
-  const interp = tarotInterpretation(cards, q, mode);
-  const out = document.getElementById('tarotInterpretation');
-  out.style.display='block';
-  out.textContent = interp;
-
-  // Auto-flip wave for effect
-  setTimeout(()=>{
-    $$('#tarotBoard .tarot-card').forEach((c,i)=> setTimeout(()=> c.classList.add('flipped'), 200*i));
-  }, 200);
-});
-document.getElementById('clearCards').addEventListener('click', ()=>{
-  document.getElementById('tarotBoard').innerHTML='';
-  document.getElementById('tarotInterpretation').style.display='none';
-  document.getElementById('tarotInterpretation').textContent='';
-});
-
-/* ---------------------------
-   ONLINE API (optional)
-----------------------------*/
-async function callTextApi(prompt){
-  const base = document.getElementById('apiBase').value.trim();
-  const key = document.getElementById('apiKey').value.trim();
-  if(!base){ throw new Error('API base not set'); }
-  // Generic JSON POST: {prompt:"..."} -> {text:"..."}
-  const res = await fetch(base, {
-    method:'POST',
-    headers:{'Content-Type':'application/json', ...(key?{'Authorization':`Bearer ${key}`}:{})},
-    body: JSON.stringify({ prompt })
-  });
-  if(!res.ok) throw new Error('API error '+res.status);
-  const data = await res.json();
-  return data.text || JSON.stringify(data);
-}
-
-document.getElementById('genAiOffline').addEventListener('click', ()=>{
-  const name = document.getElementById('name').value.trim()||'Friend';
-  const dob = document.getElementById('dob').value;
-  const life = lifePath(dob);
-  const soul = soulUrge(name);
-  const pers = personalityNumber(name);
-  const sun = getSunSign(new Date(dob));
-  const msg = `✨ ${name}, here’s your distilled guidance:
-
-• Core Theme (Life Path ${life}): Move with integrity and consistent effort—doors open as you show up daily.
-• Heart (Soul Urge ${soul}): Your heart seeks authentic bonds and meaningful creation—avoid distractions.
-• Presence (Personality ${pers}): People sense your quiet strength; use it to calm rooms and lead gently.
-• Sun in ${sun?.name||'—'} (${sun?.el||''}): ${sun?.vibe||''}
-
-Next 90 days:
-- Focus: Clarify one priority and take micro-actions.
-- Relationships: Honest conversations deepen trust.
-- Wellbeing: Ground in routine; sleep and hydration are sacred.
-
-Mantra: “Small faithful steps create big luminous changes.”`;
-  document.getElementById('aiOutput').textContent = msg;
-});
-
-document.getElementById('genAiOnline').addEventListener('click', async ()=>{
-  const name = document.getElementById('name').value.trim()||'Friend';
-  const dob = document.getElementById('dob').value||'—';
-  const q = document.getElementById('question').value.trim()||'General life guidance';
-  const base = document.getElementById('apiBase').value.trim();
-  const out = document.getElementById('aiOutput');
-  if(!base){ out.textContent='Please enter a free AI API Base URL in Mode settings.'; return; }
-  out.textContent='Asking the Oracle... (contacting API)…';
-  try{
-    const prompt = `Create a gentle, practical life guidance for:
-Name: ${name}
-DOB: ${dob}
-Question: ${q}
-Style: brief bullets + one mantra, grounded, kind, mystical but clear.`;
-    const text = await callTextApi(prompt);
-    out.textContent = text;
-  }catch(e){
-    out.textContent = 'API call failed: '+e.message;
-  }
-});
-
-/* Online Astro fetch (optional) */
-document.getElementById('fetchAstroApi').addEventListener('click', async ()=>{
-  const base = document.getElementById('apiBase').value.trim();
-  const key = document.getElementById('apiKey').value.trim();
-  const name = document.getElementById('name').value.trim();
-  const dob = document.getElementById('dob').value;
-  if(!base){ alert('Enter API Base URL in Mode settings first.'); return; }
-  try{
-    const payload = { type:'astro', name, dob };
-    const res = await fetch(base, {
-      method:'POST',
-      headers:{'Content-Type':'application/json', ...(key?{'Authorization':`Bearer ${key}`}:{})},
-      body: JSON.stringify(payload)
-    });
-    if(!res.ok) throw new Error('Astro API error: '+res.status);
-    const data = await res.json();
-    // Expect shape { sunSign, element, vibe, dasha:[{lord,start,end,years}] }
-    if(data.sunSign){
-      document.getElementById('sunSign').textContent = data.sunSign;
-      document.getElementById('sunElement').textContent = data.element || '—';
-      document.getElementById('sunPersonality').textContent = data.vibe || '—';
-    }
-    if(Array.isArray(data.dasha)){ mountDasha(data.dasha); }
-    alert('Online Astro updated!');
-  }catch(e){
-    alert('Online Astro failed: '+e.message);
-  }
-});
-
-/* ---------------------------
-   PDF REPORT
-----------------------------*/
-document.getElementById('downloadPdf').addEventListener('click', async ()=>{
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({unit:'pt', format:'a4'});
-  const name = document.getElementById('name').value.trim()||'Friend';
-  const dob = document.getElementById('dob').value||'—';
-  const sunS = document.getElementById('sunSign').textContent||'—';
-  const sunE = document.getElementById('sunElement').textContent||'—';
-  const sunV = document.getElementById('sunPersonality').textContent||'—';
-  const ai = document.getElementById('aiOutput').textContent||'—';
-  const q = document.getElementById('question').value.trim()||'—';
-  const tarot = document.getElementById('tarotInterpretation').textContent||'—';
-
-  let y=56;
-  doc.setFont('Times','bold'); doc.setFontSize(20);
-  doc.text('Divine Path — Personalized Report', 40,y); y+=22;
-  doc.setFont('Times','normal'); doc.setFontSize(12);
-  doc.text(`Name: ${name}`, 40,y); y+=16;
-  doc.text(`DOB: ${dob}`, 40,y); y+=16;
-
-  y+=10; doc.setFont('Times','bold'); doc.text('Astrology (Basics)', 40,y); y+=16;
-  doc.setFont('Times','normal');
-  doc.text(`Sun Sign: ${sunS} (${sunE})`, 40,y); y+=14;
-  doc.text(`Vibe: ${sunV}`, 40,y, {maxWidth:520}); y+=30;
-
-  doc.setFont('Times','bold'); doc.text('Tarot', 40,y); y+=16;
-  doc.setFont('Times','normal');
-  doc.text(`Question: ${q}`, 40,y, {maxWidth:520}); y+=14;
-  doc.text(tarot, 40,y, {maxWidth:520}); y += 120;
-
-  doc.setFont('Times','bold'); doc.text('AI Insight', 40,y); y+=16;
-  doc.setFont('Times','normal');
-  doc.text(ai, 40,y, {maxWidth:520}); y+=100;
-
-  doc.setFont('Times','italic'); doc.setTextColor(120);
-  doc.text('This report blends offline calculations with optional online AI. Use as reflective guidance.', 40, 780);
-  doc.save('DivinePath_Report.pdf');
-});
-
-/* ---------------------------
-   FINER UI POLISH
-----------------------------*/
-const shimmerBtns = document.querySelectorAll('.btn, .ghost, .pill-btn');
-shimmerBtns.forEach(btn=>{
-  btn.addEventListener('pointermove', (e)=>{
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-    btn.style.setProperty('--mx', x + 'px');
-    btn.style.setProperty('--my', y + 'px');
-  });
-});
-
-/* GSAP entrance */
-window.addEventListener('load', ()=>{
-  if(window.gsap){
-    gsap.from('.nav .wrap',{y:-18,opacity:0,duration:.7,ease:'power2.out'});
-    gsap.from('.hero .content > *',{y:18,opacity:0,stagger:.08,duration:.7,delay:.2,ease:'power2.out'});
-  }
-});
-</script>
-</body>
-</html>
+<!-- GSAP CDN (optional) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gs
